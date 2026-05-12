@@ -16,7 +16,10 @@ public class SnowyAddons implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Initialized successfully!");
+		ModConfig.HANDLER.load(); // load config
 
+
+
+		LOGGER.info("Initialized successfully!");
 	}
 }

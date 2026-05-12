@@ -3,13 +3,13 @@
 	"id": "snowyaddons",
 	"version": "${version}",
 	"name": "SnowyAddons",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A Hypixel Skyblock QOL Mod for 1.21.11. Made with <3 by snowy.",
 	"authors": [
-		"Me!"
+		"SnowyFranzz"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/snowyfranzz",
+		"sources": "https://github.com/snowyfranzz/snowyaddons"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/snowyaddons/icon.png",
