@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"snowy.snowyaddons.client.SnowyAddonsClient"
+		],
+		"modmenu": [
+			"snowy.snowyaddons.client.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -31,6 +34,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.19.2",
+		"yet_another_config_lib_v3": ">=3.8.2",
 		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*"
