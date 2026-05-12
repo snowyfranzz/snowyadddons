@@ -1,9 +1,6 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
 # BlueJ files
 *.ctxt
 
@@ -22,3 +19,22 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ide and gradle
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.gradle/
+build/
+
+# mc specific
+run/
+**/run/
+logs/
+*.log
+
+# mac files </3
+.DS_Store
+thumbs.db
