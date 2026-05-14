@@ -1,10 +1,8 @@
 package snowy.snowyaddons.client.mixin;
 
-import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -66,7 +64,7 @@ public abstract class EntityGlowMixin {
             return;
         }
 
-        if (config.selfRenderPlayerEsp) { // check for self renderer. skips LocalPlayer check
+        if (config.selfRenderPlayerEsp) { // check for self renderer. if true skips LocalPlayer check
             if (config.playerEsp && thisEntity instanceof Player) {
                 cir.setReturnValue(getDecimal(config.playerEspColor));
                 return;

@@ -17,8 +17,8 @@ public class ModConfigScreen {
                 .title(Component.literal("SnowyAddons Config"))
                 .save(ModConfig.HANDLER::save)
                 .category(ConfigCategory.createBuilder()
-                        .name(Component.literal("Settings"))
-                        .tooltip(Component.literal("What else do you wanna know bro </3"))
+                        .name(Component.literal("Render"))
+                        .tooltip(Component.literal("Modules that renders information on your screen."))
 
                         // bat esp start
                         .option(Option.<Boolean>createBuilder()
@@ -36,7 +36,7 @@ public class ModConfigScreen {
                         // bat esp color picker start
                         .option(Option.<Color>createBuilder()
                                 .name(Component.literal("Glow Color"))
-                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Bat ESP")))
+                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Bat ESP.")))
                                 .binding(
                                         new Color(255, 165, 0),
                                         () -> ModConfig.HANDLER.instance().batEspColor,
@@ -60,7 +60,7 @@ public class ModConfigScreen {
                         // star mob esp color picker start
                         .option(Option.<Color>createBuilder()
                                 .name(Component.literal("Glow Color"))
-                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Star Mob ESP")))
+                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Star Mob ESP.")))
                                 .binding(
                                         new Color(127, 0, 255),
                                         () -> ModConfig.HANDLER.instance().starMobEspColor,
@@ -85,7 +85,7 @@ public class ModConfigScreen {
                         // player esp color picker start
                         .option(Option.<Color>createBuilder()
                                 .name(Component.literal("Glow Color"))
-                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Player ESP")))
+                                .description(OptionDescription.of(Component.literal("Changes the glow color of the Player ESP.")))
                                 .binding(
                                         new Color(255, 0, 0),
                                         () -> ModConfig.HANDLER.instance().playerEspColor,
@@ -98,7 +98,7 @@ public class ModConfigScreen {
                         .option(Option.<Boolean>createBuilder()
 
                                 .name(Component.literal("Render yourself on ESP"))
-                                .description(OptionDescription.of(Component.literal("Renders yourself on esp. Idk why you'd want this but you do you twin")))
+                                .description(OptionDescription.of(Component.literal("Renders yourself on Player ESP. Idk why you'd want this but you do you twin!")))
                                 .binding(
                                         false,
                                         () -> ModConfig.HANDLER.instance().selfRenderPlayerEsp,
