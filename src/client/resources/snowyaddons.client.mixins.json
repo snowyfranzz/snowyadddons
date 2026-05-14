@@ -3,7 +3,8 @@
 	"package": "snowy.snowyaddons.client.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"ExampleClientMixin",
+		"EntityGlowMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
