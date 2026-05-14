@@ -31,6 +31,19 @@ public abstract class EntityGlowMixin {
             return;
         }
 
+        if (config.selfRenderPlayerEsp) { // check for self renderer. skips LocalPlayer check
+            if (thisEntity instanceof Player) {
+                cir.setReturnValue(config.playerEsp);
+                return;
+            }
+
+        } else { // self renderer disabled -> doesn't render LocalPlayer
+            if (thisEntity instanceof Player && !(thisEntity instanceof net.minecraft.client.player.LocalPlayer)) {
+                cir.setReturnValue(config.playerEsp);
+                return;
+            }
+        }
+
     }
 
     private int getDecimal(java.awt.Color c) {
@@ -51,6 +64,19 @@ public abstract class EntityGlowMixin {
         if (config.starMobEsp && thisEntity instanceof Enemy){
             cir.setReturnValue(getDecimal(config.starMobEspColor));
             return;
+        }
+
+        if (config.selfRenderPlayerEsp) { // check for self renderer. skips LocalPlayer check
+            if (config.playerEsp && thisEntity instanceof Player) {
+                cir.setReturnValue(getDecimal(config.playerEspColor));
+                return;
+            }
+
+        } else { // self renderer disabled -> doesn't render LocalPlayer
+            if (config.playerEsp && thisEntity instanceof Player && !(thisEntity instanceof net.minecraft.client.player.LocalPlayer)) {
+                cir.setReturnValue(getDecimal(config.playerEspColor));
+                return;
+            }
         }
     }
 }

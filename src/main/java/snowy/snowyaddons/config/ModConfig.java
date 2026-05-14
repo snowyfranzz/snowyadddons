@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
 
 import java.awt.*;
+import java.io.Serial;
 
 public class ModConfig {
     public static ConfigClassHandler<ModConfig> HANDLER = ConfigClassHandler.createBuilder(ModConfig.class)
@@ -26,4 +27,11 @@ public class ModConfig {
     public boolean starMobEsp = false;
     @SerialEntry
     public Color starMobEspColor = new Color(255, 0, 0);
+
+    @SerialEntry
+    public boolean playerEsp = false;
+    @SerialEntry
+    public Color playerEspColor = new Color(127, 0, 255);
+    @SerialEntry
+    public boolean selfRenderPlayerEsp = false;
 }
