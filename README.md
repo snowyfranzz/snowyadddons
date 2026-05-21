@@ -9,12 +9,36 @@ SnowyAddons directly depends on YACL for its config system.
 It's also recommended to use Mod Menu to easily access the settings menu through the "Mods" button.
 
 ## 📜 Modules and Features
-<details>
-<summary><h3>🔎 Render</h3></summary>
-<li> Bat ESP: Renders a glow around secret bats that is visible through walls. </li>
-<li> Star Mob ESP: Renders a glow around star mobs that is visible through walls. </li>
-<li> Player ESP: Renders a glow around players that is visible through walls.</li>
-</details>
+
+### 🔎 Render
+
+> Bat ESP: Renders a glow around secret bats that is visible through walls.
+> 
+> Star Mob ESP: Renders a glow around star mobs that is visible through walls.
+> 
+> Player ESP: Renders a glow around players that is visible through walls.
+
+### 🗓️ Dailies
+
+#### Farming:
+- Pests
+- Greenhouse
+  
+#### Crimson isles:
+- Matriarch
+- Reputation
+- XP Bottles Flip
+
+#### Galatea:
+- Agatha's contests
+
+#### Other:
+- Rabbit hitman
+- Chocolate factory
+- Huntraps
+- Dungeons
+- Minions
+- Experimentation Table
 
 ## ⚙️ Commands
 `/snowy` → Opens the mod screen.
@@ -29,4 +53,6 @@ It's also recommended to use Mod Menu to easily access the settings menu through
 
 `/snowy toggle` <module> -> Enables / Disables a module.
 
+`/snowy dailies` -> Shows dailies list.
 
+`/snowy dailies check <daily>` -> Toggles the daily between completed or uncompleted.
