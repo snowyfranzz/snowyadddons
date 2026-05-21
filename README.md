@@ -17,16 +17,16 @@ It's also recommended to use Mod Menu to easily access the settings menu through
 </details>
 
 ## ⚙️ Commands
-`/snowyaddons` → Opens the mod screen.
+`/snowy` → Opens the mod screen.
 
-`/snowyaddons help` -> Sends a message in chat with all commands.
+`/snowy help` -> Se nds a message in chat with all commands.
 
-`snowyaddons config` -> Opens the config screen.
+`/snowy config` -> Opens the config screen.
 
-`/snowyaddons version` -> Sends the version in chat.
+`/snowy version` -> Sends the version in chat.
 
-`/snowyaddons boop` -> Replies with a "Boop!"
+`/snowy boop` -> Replies with a "Boop!"
 
-`/snowyaddons toggle` <module> -> Enables / Disables a module.
+`/snowy toggle` <module> -> Enables / Disables a module.
 
 
