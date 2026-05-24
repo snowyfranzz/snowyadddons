@@ -36,6 +36,9 @@ public class DailiesManager {
 
     static ModConfig config = ModConfig.HANDLER.instance();
 
+    if(DataManager.notificationState();)
+
+
     public static List<Supplier<Boolean>> dailiesToggled = List.of(
             () -> config.dailiesShowPests,
             () -> config.dailiesShowGreenhouse,
