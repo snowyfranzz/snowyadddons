@@ -51,8 +51,6 @@ public class ModCommandRegister {
         return separatorBuilder.toString();
     }
 
-    public static String linesFormattedToWidth = textSeparatorBuilder();
-
     public static void commandRegister(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandBuildContext registryAccess) {
         // snowy (main command)
         dispatcher.register(ClientCommandManager.literal("snowy")
@@ -79,6 +77,8 @@ public class ModCommandRegister {
                 .then(ClientCommandManager.literal("help")
                         .executes(context -> {
                             var source = context.getSource();
+
+                            String linesFormattedToWidth = textSeparatorBuilder();
 
                             source.sendFeedback(Component.literal(linesFormattedToWidth                                                            ).withStyle(ChatFormatting.DARK_GREEN));
                             source.sendFeedback(Component.literal(" SnowyAddons Help:"                                                      ).withStyle(ChatFormatting.DARK_GREEN));

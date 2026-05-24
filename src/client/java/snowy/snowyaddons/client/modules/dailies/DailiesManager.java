@@ -1,11 +1,15 @@
 package snowy.snowyaddons.client.modules.dailies;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import snowy.snowyaddons.config.ModConfig;
+import snowy.snowyaddons.config.dailies.DailiesNotificationSendMethod;
 import snowy.snowyaddons.data.DataManager;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -34,10 +38,9 @@ public class DailiesManager {
         - Experimentation Table
      */
 
+    private static long lastNotificationTime = 0L; // for WHILE_UNCOMPLETED
+
     static ModConfig config = ModConfig.HANDLER.instance();
-
-    if(DataManager.notificationState();)
-
 
     public static List<Supplier<Boolean>> dailiesToggled = List.of(
             () -> config.dailiesShowPests,
@@ -108,7 +111,65 @@ public class DailiesManager {
         }
 
         return dailiesComponent;
-    };
+    }
+    public static boolean isSentToday(){
+        // FIXED: Point this to lastDailyDate, which tracks the notification lifecycle
+        DataManager.JsonDate saved = DataManager.INSTANCE.lastDailyDate;
+
+        if (saved.year == 0 || saved.month == 0 || saved.day == 0) {
+            return false;
+        }
+
+        LocalDate savedDate = LocalDate.of(saved.year, saved.month, saved.day);
+        return !savedDate.isBefore(LocalDate.now());
+    }
+
+    public static void sendDailiesNotification() {
+
+        if (!config.dailiesNotification || !DataManager.notificationState()) {
+            return;
+        }
+
+        boolean shouldSend = false;
+        long currentTime = System.currentTimeMillis();
+
+        // --- PER_SESSION ---
+        if (config.dailiesSendMethod == DailiesNotificationSendMethod.PER_SESSION) {
+            if (lastNotificationTime == 0L) {
+                shouldSend = true;
+            }
+        }
+        // --- ONCE_PER_DAY ---
+        else if (config.dailiesSendMethod == DailiesNotificationSendMethod.ONCE_PER_DAY) {
+            if (!isSentToday()) {
+                shouldSend = true;
+            }
+        }
+        // --- WHILE_UNCOMPLETED ---
+        else if (config.dailiesSendMethod == DailiesNotificationSendMethod.WHILE_UNCOMPLETED) {
+            long cooldownMs = (long) config.whileUncompletedSleep * 60 * 1000;
+
+            if (lastNotificationTime == 0L || (currentTime - lastNotificationTime >= cooldownMs)) {
+                shouldSend = true;
+            }
+        }
+
+        if (shouldSend) {
+            lastNotificationTime = currentTime;
+
+            Component notificationMessage = Component.literal("[SnowyAddons] You have pending daily tasks:\n").withStyle(ChatFormatting.AQUA)
+                    .copy()
+                    .append(dailiesListBuilder());
+
+            Minecraft.getInstance().player.displayClientMessage(notificationMessage, false);
+
+            if (config.dailiesSendMethod == DailiesNotificationSendMethod.ONCE_PER_DAY) {
+                // FIXED: explicitly record today's date to file before calling save
+                DataManager.INSTANCE.lastDailyDate = new DataManager.JsonDate();
+                DataManager.save();
+            }
+        }
+    }
 
 
 }
