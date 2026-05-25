@@ -16,6 +16,34 @@ public class ModConfigScreen {
                 .title(Component.literal("SnowyAddons Config"))
                 .save(ModConfig.HANDLER::save)
 
+                // dungeons category start
+                .category(ConfigCategory.createBuilder()
+                        .name(Component.literal("Dungeons"))
+                        .tooltip(Component.literal("Best skill in the game btw!"))
+
+                        // m2 group
+                        .group(OptionGroup.createBuilder()
+                                .name(Component.literal("M2"))
+                                .collapsed(true)
+
+                                // bat esp start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Phase 2 Fire Freeze timer"))
+                                        .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to use your fire freeze staff. Can be used to freeze scarf or the undeads!")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().m2FireFreeze,
+                                                newVal -> ModConfig.HANDLER.instance().m2FireFreeze = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // bat esp end
+
+                                .build())
+                        //m2 group end
+
+                        .build()) // dungeons category end
+
                 // render category start
                 .category(ConfigCategory.createBuilder()
                         .name(Component.literal("Render"))

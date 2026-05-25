@@ -113,7 +113,6 @@ public class DailiesManager {
         return dailiesComponent;
     }
     public static boolean isSentToday(){
-        // FIXED: Point this to lastDailyDate, which tracks the notification lifecycle
         DataManager.JsonDate saved = DataManager.INSTANCE.lastDailyDate;
 
         if (saved.year == 0 || saved.month == 0 || saved.day == 0) {
@@ -164,7 +163,7 @@ public class DailiesManager {
             Minecraft.getInstance().player.displayClientMessage(notificationMessage, false);
 
             if (config.dailiesSendMethod == DailiesNotificationSendMethod.ONCE_PER_DAY) {
-                // FIXED: explicitly record today's date to file before calling save
+
                 DataManager.INSTANCE.lastDailyDate = new DataManager.JsonDate();
                 DataManager.save();
             }

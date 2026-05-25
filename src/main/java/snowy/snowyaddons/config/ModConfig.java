@@ -78,4 +78,7 @@ public class ModConfig {
     public boolean dailiesShowMinions = false;
     @SerialEntry
     public boolean dailiesShowExpTable = true;
+
+    @SerialEntry
+    public boolean m2FireFreeze = true;
 }
