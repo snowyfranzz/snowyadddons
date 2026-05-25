@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
@@ -17,13 +18,17 @@ public class M2FireFreezeTimer {
 
     private int remainingTicks = 0;
 
-    public void registerHudRenderer() {
+    public void registerEvents() {
         HudRenderCallback.EVENT.register(this::onHudRender);
     }
 
     public void onTick(){
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer localPlayer = mc.player;
+
         if(ChatListener.isChatMessage("[BOSS] Scarf: Those toys are not strong enough I see.")){
-            this.remainingTicks = 100;
+            // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r detected scarf message"), false);
+            this.remainingTicks = 120;
         }
 
         if (this.remainingTicks > 0){
@@ -32,6 +37,9 @@ public class M2FireFreezeTimer {
     }
 
     public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer localPlayer = mc.player;
+
         if (this.remainingTicks > 0) {
 
             int centerHeight = guiGraphics.guiHeight() - (guiGraphics.guiHeight() / 2);
@@ -45,6 +53,8 @@ public class M2FireFreezeTimer {
             Component textToDraw = Component.literal("Fire Freeze: " + formattedTime);
 
             HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, 0xFFFF5555, true);
+
+            // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r tried drawing to hud"), false);
         }
     }
 }

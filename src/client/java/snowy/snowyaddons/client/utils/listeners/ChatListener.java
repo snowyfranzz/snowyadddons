@@ -8,16 +8,27 @@ public class ChatListener {
     private static String latestChatMessage = "";
 
     public static void register() {
-        ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
-            String rawText = message.getString();
-
-            latestChatMessage = rawText.replaceAll("(?i)§[0-9a-fk-or]", "").toUpperCase();
+        ClientReceiveMessageEvents.CHAT.register((message, signedMessage, sender, params, receptionTime) -> {
+            storeMessage(message);
         });
+
+        ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
+            storeMessage(message);
+        });
+    }
+
+    private static void storeMessage(Component message) {
+        String rawText = message.getString();
+        latestChatMessage = rawText.replaceAll("(?i)§[0-9a-fk-or]", "").toUpperCase();
     }
 
     public static boolean isChatMessage(String messageTarget) {
         String cleanTarget = messageTarget.replaceAll("(?i)§[0-9a-fk-or]", "").toUpperCase();
 
-        return latestChatMessage.contains(cleanTarget);
+        if (latestChatMessage.contains(cleanTarget)) {
+            latestChatMessage = "";
+            return true;
+        }
+        return false;
     }
 }

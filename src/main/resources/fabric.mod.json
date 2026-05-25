@@ -3,7 +3,8 @@
 	"id": "snowyaddons",
 	"version": "${version}",
 	"name": "SnowyAddons",
-	"description": "A Hypixel Skyblock QOL Mod for 1.21.11. Made with <3 by snowy.",
+	"description": "A Hypixel Skyblock QOL Mod for 1.21.11. \nMade with <3 by snowy.",
+
 	"authors": [
 		"SnowyFranzz"
 	],
