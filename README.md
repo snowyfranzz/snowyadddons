@@ -1,5 +1,6 @@
 # ❄️ SnowyAddons
-<img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total' href='[github](https://github.com/snowyfranzz/snowyaddons/releases)'> 
+<a href='https://github.com/snowyfranzz/snowyaddons/releases'> <img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total'>
+   
 
 SnowyAddons is a mod for Hypixel Skyblock, including both legit QOL and soft-cheat modules, having untraceable features that give you an advantage.
 
