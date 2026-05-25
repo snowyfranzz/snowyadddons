@@ -19,7 +19,7 @@ public class ModConfigScreen {
                 // dungeons category start
                 .category(ConfigCategory.createBuilder()
                         .name(Component.literal("Dungeons"))
-                        .tooltip(Component.literal("Best skill in the game btw!"))
+                        .tooltip(Component.literal("Best skill in the game btw"))
 
                         // m2 group
                         .group(OptionGroup.createBuilder()

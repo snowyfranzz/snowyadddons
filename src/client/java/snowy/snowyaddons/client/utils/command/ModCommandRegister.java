@@ -156,12 +156,23 @@ public class ModCommandRegister {
                             context.getSource().sendFeedback(Component.literal("Usage: /snowyaddons toggle <module>").withStyle(ChatFormatting.DARK_RED));
                             return 1;
                         })
+                        .then(ClientCommandManager.literal("m2FireFreezeTimer")
+                                .executes(context -> {
+                                    ModConfig.HANDLER.instance().m2FireFreeze = !ModConfig.HANDLER.instance().m2FireFreeze;
+                                    if(ModConfig.HANDLER.instance().m2FireFreeze){
+                                        context.getSource().sendFeedback(Component.literal("[+] SnowyAddons: Toggled m2FireFreezeTimer on!").withStyle(ChatFormatting.AQUA));
+                                    } else {
+                                        context.getSource().sendFeedback(Component.literal("[-] SnowyAddons: Toggled m2FireFreezeTimer off!").withStyle(ChatFormatting.AQUA));
+                                    }
+                                    return 1;
+                                })
+                        )
                 )
                 // dailies subcommand
                 .then(ClientCommandManager.literal("dailies")
                         .executes(context -> {
                             mc.execute(() -> {
-
+                                context.getSource().sendFeedback(Component.literal("[SnowyAddons] Dailies list:").withStyle(ChatFormatting.AQUA));
                                 context.getSource().sendFeedback(DailiesManager.dailiesListBuilder()); // DailiesManager.java
 
                             });
