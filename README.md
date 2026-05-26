@@ -2,10 +2,10 @@
 <a href='https://github.com/snowyfranzz/snowyaddons/releases'> <img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total'>
    
 
-SnowyAddons is a mod for Hypixel Skyblock, including both legit QOL and soft-cheat modules, having untraceable features that give you an advantage.
+SnowyAddons is a mod for Hypixel Skyblock that has some useful QOL modules!
 
 > [!CAUTION]
-> ***Please note that you are under the risk of getting banned EVEN with it being "untraceable". *Use at your own risk.***
+> *Please note that you are under the risk of getting banned EVEN with it being "unbannable". *Use at your own risk.**
 
 ## 🔗 Dependencies
 
