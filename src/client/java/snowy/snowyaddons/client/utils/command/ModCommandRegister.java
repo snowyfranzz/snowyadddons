@@ -30,7 +30,7 @@ import static snowy.snowyaddons.SnowyAddons.MOD_ID;
     /snowyaddons version -> Sends the version in chat.
     /snowyaddons boop -> Replies with a Boop!
     /snowyaddons toggle <module> -> Enables / Disables a module.
-    /snowyaddons daily <check> <daily> -> Lists dailies and toggles them as completed/uncompleted.
+    /snowyaddons daily <daily> -> Lists dailies and toggles them as completed/uncompleted.
 
  */
 
@@ -178,8 +178,6 @@ public class ModCommandRegister {
                             });
                             return 1;
                         })
-                        // check subcommand
-                        .then(ClientCommandManager.literal("check")
 
                                 // TODO: Compress multiple statements into one using brigadier
 
@@ -342,13 +340,12 @@ public class ModCommandRegister {
                                 .executes(context -> {
                                 mc.execute(() -> {
 
-                                    context.getSource().sendFeedback(Component.literal("Usage: /snowyaddons dailies check <option>").withStyle(ChatFormatting.DARK_RED));
+                                    context.getSource().sendFeedback(Component.literal("Usage: /snowyaddons dailies <option>").withStyle(ChatFormatting.DARK_RED));
 
                                 });
                                 return 1;
                                 })
                         )
-                )
         );
     }
 }

@@ -3,18 +3,13 @@ package snowy.snowyaddons.client.modules.dungeons;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
-import net.minecraft.client.gui.GuiGraphics;
 
-public class M2FireFreezeTimer {
-
-    // DEDICTED TO CHUNGES <3
-    // M2 RATS ON TOP
-    // does he know
-
+public class M2IceSprayTimer {
     private int remainingTicks = 0;
 
     public void registerEvents() {
@@ -22,7 +17,7 @@ public class M2FireFreezeTimer {
 
         ChatListener.subscribe(cleanMessage -> {
             if (cleanMessage.contains("[BOSS] SCARF: THOSE TOYS ARE NOT STRONG ENOUGH I SEE.")) {
-                this.remainingTicks = 110;
+                this.remainingTicks = 200;
             }
         });
     }
@@ -47,9 +42,9 @@ public class M2FireFreezeTimer {
             // format to 1 decimal place
             String formattedTime = String.format("%.1fs", secondsRemaining);
 
-            Component textToDraw = Component.literal("Fire Freeze: " + formattedTime);
+            Component textToDraw = Component.literal("Ice Spray: " + formattedTime);
 
-            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, 0xFFFF5555, true);
+            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 40, 0xFF03C2FC, true);
 
             // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r tried drawing to hud"), false);
         }

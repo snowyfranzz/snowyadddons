@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
 import snowy.snowyaddons.client.modules.dungeons.M2FireFreezeTimer;
+import snowy.snowyaddons.client.modules.dungeons.M2IceSprayTimer;
 import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.command.ModCommandRegister;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
@@ -18,8 +19,11 @@ public class SnowyAddonsClient implements ClientModInitializer {
 		ClientCommandRegistrationCallback.EVENT.register(ModCommandRegister::commandRegister);
 		ChatListener.register();
 
-		M2FireFreezeTimer m2Timer = new M2FireFreezeTimer();
-		m2Timer.registerEvents();
+		M2FireFreezeTimer m2FfTimer = new M2FireFreezeTimer();
+		m2FfTimer.registerEvents();
+
+		M2IceSprayTimer m2SprayTimer = new M2IceSprayTimer();
+		m2SprayTimer.registerEvents();
 
 
 		// every end of tick
@@ -31,8 +35,14 @@ public class SnowyAddonsClient implements ClientModInitializer {
 					if (GetServerInfo.isInDungeon())
 					{
 						if (ModConfig.HANDLER.instance().m2FireFreeze){
-							m2Timer.onTick();
+							m2FfTimer.onTick();
 						}
+
+						if (ModConfig.HANDLER.instance().m2IceSpray){
+							m2SprayTimer.onTick();
+						}
+
+
 					}
 				}
 			}

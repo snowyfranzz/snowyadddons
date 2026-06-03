@@ -1,6 +1,6 @@
 # ❄️ SnowyAddons
 <a href='https://github.com/snowyfranzz/snowyaddons/releases'> <img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total'>
-   
+
 
 SnowyAddons is a mod for Hypixel Skyblock that has some useful QOL modules!
 

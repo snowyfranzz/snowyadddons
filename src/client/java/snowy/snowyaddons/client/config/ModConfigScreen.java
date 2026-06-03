@@ -24,9 +24,9 @@ public class ModConfigScreen {
                         // m2 group
                         .group(OptionGroup.createBuilder()
                                 .name(Component.literal("M2"))
-                                .collapsed(true)
+                                .collapsed(false)
 
-                                // bat esp start
+                                // ff timer start
                                 .option(Option.<Boolean>createBuilder()
 
                                         .name(Component.literal("Phase 2 Fire Freeze timer"))
@@ -37,7 +37,20 @@ public class ModConfigScreen {
                                                 newVal -> ModConfig.HANDLER.instance().m2FireFreeze = newVal
                                         )
                                         .controller(TickBoxControllerBuilder::create)
-                                        .build()) // bat esp end
+                                        .build()) // ff timer end
+
+                                // spray timer start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Phase 2 Ice Spray timer"))
+                                        .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to use your ice spray / when mobs will respawn. Can be used to freeze scarf or the undeads!")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().m2IceSpray,
+                                                newVal -> ModConfig.HANDLER.instance().m2IceSpray = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // spray timer end
 
                                 .build())
                         //m2 group end
@@ -52,7 +65,7 @@ public class ModConfigScreen {
                 // bat esp group
                         .group(OptionGroup.createBuilder()
                             .name(Component.literal("Bat ESP"))
-                            .collapsed(true)
+                            .collapsed(false)
 
                         // bat esp start
                             .option(Option.<Boolean>createBuilder()
@@ -85,7 +98,7 @@ public class ModConfigScreen {
                 // star mob esp group start
                         .group(OptionGroup.createBuilder()
                             .name(Component.literal("Star Mob ESP"))
-                            .collapsed(true)
+                            .collapsed(false)
 
                         // star mob esp start
                         .option(Option.<Boolean>createBuilder()
@@ -116,13 +129,13 @@ public class ModConfigScreen {
                         // player esp group start
                         .group(OptionGroup.createBuilder()
                                 .name(Component.literal("Player ESP"))
-                                .collapsed(true)
+                                .collapsed(false)
 
                         // player esp start
                         .option(Option.<Boolean>createBuilder()
 
                                 .name(Component.literal("Player ESP"))
-                                .description(OptionDescription.of(Component.literal("Highlights players through walls. Wallhax!")))
+                                .description(OptionDescription.of(Component.literal("Highlights players through walls. Wallhax! (Quakecraft ahh module)")))
                                 .binding(
                                         false,
                                         () -> ModConfig.HANDLER.instance().playerEsp,
