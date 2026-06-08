@@ -42,7 +42,7 @@ public class M2IceSprayTimer {
             // format to 1 decimal place
             String formattedTime = String.format("%.1fs", secondsRemaining);
 
-            Component textToDraw = Component.literal("Ice Spray: " + formattedTime);
+            Component textToDraw = Component.literal("Phase 2: " + formattedTime);
 
             HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 40, 0xFF03C2FC, true);
 

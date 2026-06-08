@@ -43,7 +43,7 @@ public class ModConfigScreen {
                                 .option(Option.<Boolean>createBuilder()
 
                                         .name(Component.literal("Phase 2 Ice Spray timer"))
-                                        .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to use your ice spray / when mobs will respawn. Can be used to freeze scarf or the undeads!")))
+                                        .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when phase 2 starts. Can be used to freeze/gyro scarf or the undeads!")))
                                         .binding(
                                                 false,
                                                 () -> ModConfig.HANDLER.instance().m2IceSpray,
