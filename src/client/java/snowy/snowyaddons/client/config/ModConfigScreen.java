@@ -46,8 +46,8 @@ public class ModConfigScreen {
                                         .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when phase 2 starts. Can be used to freeze/gyro scarf or the undeads!")))
                                         .binding(
                                                 false,
-                                                () -> ModConfig.HANDLER.instance().m2IceSpray,
-                                                newVal -> ModConfig.HANDLER.instance().m2IceSpray = newVal
+                                                () -> ModConfig.HANDLER.instance().m2Phase2,
+                                                newVal -> ModConfig.HANDLER.instance().m2Phase2 = newVal
                                         )
                                         .controller(TickBoxControllerBuilder::create)
                                         .build()) // spray timer end

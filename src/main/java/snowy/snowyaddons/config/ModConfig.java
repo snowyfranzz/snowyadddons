@@ -82,5 +82,7 @@ public class ModConfig {
     @SerialEntry
     public boolean m2FireFreeze = true;
     @SerialEntry
-    public boolean m2IceSpray = true;
+    public boolean m2Phase2 = true;
+    @SerialEntry
+    public boolean m2SenTech = true;
 }

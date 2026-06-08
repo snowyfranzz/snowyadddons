@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
 
-public class M2IceSprayTimer {
+public class M2Phase2Timer {
     private int remainingTicks = 0;
 
     public void registerEvents() {
@@ -17,7 +17,7 @@ public class M2IceSprayTimer {
 
         ChatListener.subscribe(cleanMessage -> {
             if (cleanMessage.contains("[BOSS] SCARF: THOSE TOYS ARE NOT STRONG ENOUGH I SEE.")) {
-                this.remainingTicks = 200;
+                this.remainingTicks = 210;
             }
         });
     }
