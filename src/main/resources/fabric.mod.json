@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "snowyaddons",
-	"version": "${version}",
+	"version": "1.1.0",
 	"name": "SnowyAddons",
 	"description": "A Hypixel Skyblock QOL Mod for 1.21.11. \nMade with <3 by snowy.",
 

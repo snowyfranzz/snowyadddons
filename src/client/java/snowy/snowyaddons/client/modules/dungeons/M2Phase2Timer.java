@@ -8,6 +8,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
+import snowy.snowyaddons.config.ModConfig;
 
 public class M2Phase2Timer {
     private int remainingTicks = 0;
@@ -24,7 +25,8 @@ public class M2Phase2Timer {
 
     public void onTick() {
         if (this.remainingTicks > 0) {
-            this.remainingTicks--;
+            float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
+            this.remainingTicks -= Math.max(1, (int) delta);
         }
     }
 
@@ -44,7 +46,7 @@ public class M2Phase2Timer {
 
             Component textToDraw = Component.literal("Phase 2: " + formattedTime);
 
-            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 40, 0xFF03C2FC, true);
+            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 40, ModConfig.HANDLER.instance().m2P2Color, true);
 
             // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r tried drawing to hud"), false);
         }

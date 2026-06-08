@@ -7,22 +7,26 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
+import snowy.snowyaddons.client.utils.SoundUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
 import snowy.snowyaddons.config.ModConfig;
 
-public class M2SenTech {
+public class BloodCampHelper {
 
-    // Copyright* © 2026–2026 SenTashi SenTech. All Rights Reserved.
-    // *Patent lowkey pending
+    // bc420 is real
 
     private int remainingTicks = 0;
+    private boolean timerActivated = false;
 
     public void registerEvents() {
         HudRenderCallback.EVENT.register(this::onHudRender);
 
+        ClientTickEvents.END_CLIENT_TICK.register(client -> this.onTick());
+
         ChatListener.subscribe(cleanMessage -> {
-            if (cleanMessage.contains("[BOSS] SCARF: THIS IS WHERE THE JOURNEY ENDS FOR YOU, ADVENTURERS.")) {
-                this.remainingTicks = 370;
+            if (cleanMessage.contains("[BOSS] THE WATCHER: LET'S SEE HOW YOU HANDLE THIS!")) {
+                this.remainingTicks = 40;
+                this.timerActivated = true;
             }
         });
     }
@@ -47,12 +51,17 @@ public class M2SenTech {
 
             // format to 1 decimal place
             String formattedTime = String.format("%.1fs", secondsRemaining);
-
-            Component textToDraw = Component.literal("SenTech©: " + formattedTime);
-
-            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, ModConfig.HANDLER.instance().m2SenTechColor, true);
+            Component textToDraw = Component.literal("Blood Camp Timer: " + formattedTime);
+            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, ModConfig.HANDLER.instance().bcHelperColor, true);
 
             // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r tried drawing to hud"), false);
+        } else {
+            if(this.timerActivated){
+                HudRendererUtil.displayTitle("CLEAR BLOOD", "", 10, 40, 10, ModConfig.HANDLER.instance().bcHelperColor);
+                SoundUtil.playSoundCatMeow();
+                timerActivated = false;
+            }
         }
     }
+
 }

@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
+import snowy.snowyaddons.client.modules.dungeons.BloodCampHelper;
 import snowy.snowyaddons.client.modules.dungeons.M2FireFreezeTimer;
 import snowy.snowyaddons.client.modules.dungeons.M2Phase2Timer;
 import snowy.snowyaddons.client.modules.dungeons.M2SenTech;
@@ -29,6 +30,9 @@ public class SnowyAddonsClient implements ClientModInitializer {
 		M2SenTech m2SenTech = new M2SenTech();
 		m2SenTech.registerEvents();
 
+		BloodCampHelper bcHelper = new BloodCampHelper();
+		bcHelper.registerEvents();
+
 
 		// every end of tick
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -49,6 +53,12 @@ public class SnowyAddonsClient implements ClientModInitializer {
 						if (ModConfig.HANDLER.instance().m2SenTech){
 							m2SenTech.onTick();
 						}
+
+						if (ModConfig.HANDLER.instance().bcHelper){
+							bcHelper.onTick();
+						}
+
+
 
 
 					}

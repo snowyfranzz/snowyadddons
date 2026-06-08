@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
 import net.minecraft.client.gui.GuiGraphics;
+import snowy.snowyaddons.config.ModConfig;
 
 public class M2FireFreezeTimer {
 
@@ -29,7 +30,8 @@ public class M2FireFreezeTimer {
 
     public void onTick() {
         if (this.remainingTicks > 0) {
-            this.remainingTicks--;
+            float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
+            this.remainingTicks -= Math.max(1, (int) delta);
         }
     }
 
@@ -49,7 +51,7 @@ public class M2FireFreezeTimer {
 
             Component textToDraw = Component.literal("Fire Freeze: " + formattedTime);
 
-            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, 0xFFFF5555, true);
+            HudRendererUtil.renderText(guiGraphics, textToDraw, centerWidth + 20, centerHeight - 20, ModConfig.HANDLER.instance().m2FfColor, true);
 
             // DEBUG -> localPlayer.displayClientMessage(Component.literal("§d[Debug]§r tried drawing to hud"), false);
         }

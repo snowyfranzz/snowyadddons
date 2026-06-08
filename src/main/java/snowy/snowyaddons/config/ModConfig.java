@@ -42,6 +42,8 @@ public class ModConfig {
     public boolean selfRenderPlayerEsp = false;
 
     // ===================== DAILIES =====================
+
+    // General
     @SerialEntry
     public boolean dailiesNotification = true;
     @SerialEntry
@@ -51,11 +53,13 @@ public class ModConfig {
     @SerialEntry
     public boolean dailiesShowCompleted = true;
 
+    // Garden
     @SerialEntry
     public boolean dailiesShowPests = true;
     @SerialEntry
     public boolean dailiesShowGreenhouse = true;
 
+    // Crimson isles
     @SerialEntry
     public boolean dailiesShowMatriarch = false;
     @SerialEntry
@@ -63,9 +67,11 @@ public class ModConfig {
     @SerialEntry
     public boolean dailiesShowBottlesFlip = false;
 
+    // Foraging
     @SerialEntry
     public boolean dailiesShowAgatha = true;
 
+    // Misc.
     @SerialEntry
     public boolean dailiesShowHitman = false;
     @SerialEntry
@@ -79,10 +85,25 @@ public class ModConfig {
     @SerialEntry
     public boolean dailiesShowExpTable = true;
 
+    // ===================== DUNGEONS =====================
     @SerialEntry
     public boolean m2FireFreeze = true;
     @SerialEntry
+    public Color m2FfColor = new Color(255, 0, 0);
+
+    @SerialEntry
     public boolean m2Phase2 = true;
     @SerialEntry
+    public Color m2P2Color = new Color(0, 140, 255);
+
+    @SerialEntry
     public boolean m2SenTech = true;
+    @SerialEntry
+    public Color m2SenTechColor = new Color(0, 215, 255);
+
+    @SerialEntry
+    public boolean bcHelper = false;
+    @SerialEntry
+    public Color bcHelperColor = new Color(255, 0, 0);
+
 }

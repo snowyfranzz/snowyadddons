@@ -42,6 +42,8 @@ public class ModCommandRegister {
         CONFIG_TOGGLES.put("playeresp", new TogglePair("playerEsp", () -> ModConfig.HANDLER.instance().playerEsp, val -> ModConfig.HANDLER.instance().playerEsp = val));
         CONFIG_TOGGLES.put("m2firefreezetimer", new TogglePair("m2FireFreezeTimer", () -> ModConfig.HANDLER.instance().m2FireFreeze, val -> ModConfig.HANDLER.instance().m2FireFreeze = val));
         CONFIG_TOGGLES.put("m2p2timer", new TogglePair("m2P2Timer", () -> ModConfig.HANDLER.instance().m2Phase2, val -> ModConfig.HANDLER.instance().m2Phase2 = val));
+        CONFIG_TOGGLES.put("m2sentech", new TogglePair("m2SenTech", () -> ModConfig.HANDLER.instance().m2SenTech, val -> ModConfig.HANDLER.instance().m2SenTech = val));
+        CONFIG_TOGGLES.put("bchelper", new TogglePair("m2BcHelper", () -> ModConfig.HANDLER.instance().bcHelper, val -> ModConfig.HANDLER.instance().bcHelper = val));
 
         // dailies zzzzzzzzzzzzzzzzzzzzz
         DAILY_TOGGLES.put("pests", new DailyPair("Pests", () -> DataManager.INSTANCE.dailiesPestsState, val -> DataManager.INSTANCE.dailiesPestsState = val));

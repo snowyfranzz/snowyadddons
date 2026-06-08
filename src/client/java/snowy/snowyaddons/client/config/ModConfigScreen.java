@@ -42,7 +42,7 @@ public class ModConfigScreen {
                                 // spray timer start
                                 .option(Option.<Boolean>createBuilder()
 
-                                        .name(Component.literal("Phase 2 Ice Spray timer"))
+                                        .name(Component.literal("Phase 2 timer"))
                                         .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when phase 2 starts. Can be used to freeze/gyro scarf or the undeads!")))
                                         .binding(
                                                 false,
@@ -52,8 +52,37 @@ public class ModConfigScreen {
                                         .controller(TickBoxControllerBuilder::create)
                                         .build()) // spray timer end
 
+                                // sentech start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("SenTech timer"))
+                                        .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to icespray phase 1 undeads. Basically a phase 1 timer. Credits to SenTashi for finding the tech!")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().m2SenTech,
+                                                newVal -> ModConfig.HANDLER.instance().m2SenTech = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // sentech end
+
                                 .build())
                         //m2 group end
+
+                        .group(OptionGroup.createBuilder()
+                                .name(Component.literal("M2"))
+                                .collapsed(false)
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Blood Camp Helper"))
+                                        .description(OptionDescription.of(Component.literal("Countdowns when to kill blood mobs. Sponsored by Chungues.")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().bcHelper,
+                                                newVal -> ModConfig.HANDLER.instance().bcHelper = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // sentech end
+                                .build())
 
                         .build()) // dungeons category end
 
