@@ -15,9 +15,12 @@ SnowyAddons directly depends on **YACL** for its config system. It is also recom
 
 ### ☠️ Dungeons
 
-| Module | Description |
-| :--- | :--- |
-| **M2 Fire Freeze Timer** | Shows a timer on screen for when to fire-freeze on m2 |
+| Module                   | Description                                                                  |
+|:-------------------------|:-----------------------------------------------------------------------------|
+| **Blood Camp Helper**    | Counts down and shows a title for when you should kill mobs to dialogue skip |
+| **M2 SenTech© Timer**    | Shows a timer on screen for when to ice-spray first phase undeads            |
+| **M2 Fire Freeze Timer** | Shows a timer on screen for when to fire-freeze on m2                        |
+| **M2 Phase 2 Timer**     | Shows a timer on screen for when M2's second phase starts                    |
 
 ### 🔎 Render
 
@@ -29,12 +32,18 @@ SnowyAddons directly depends on **YACL** for its config system. It is also recom
 
 ### 🗓️ Dailies
 
-| Category | Tracked Tasks |
-| :--- | :--- |
-| **Farming** | Pests, Greenhouse |
-| **Crimson Isles** | Matriarch, Reputation, XP Bottles Flip |
-| **Galatea** | Agatha's Contests |
+| Category | Tracked Tasks                                                                        |
+| :--- |:-------------------------------------------------------------------------------------|
+| **Farming** | Pests, Greenhouse                                                                    |
+| **Crimson Isles** | Matriarch, Reputation, XP Bottles Flip                                               |
+| **Galatea** | Agatha's Contests                                                                    |
 | **Other** | Rabbit Hitman, Chocolate Factory, Huntraps, Dungeons, Minions, Experimentation Table |
+
+### 🥳 Fun
+| Module              | Description                                                                    |
+|:--------------------|:-------------------------------------------------------------------------------|
+| **Auto Quakecraft** | Automatically sends a quakecraft duel request to someone when there's downtime |
+
 
 ## ⚙️ Commands
 `/snowy` → Opens the mod screen.
@@ -51,4 +60,4 @@ SnowyAddons directly depends on **YACL** for its config system. It is also recom
 
 `/snowy dailies` → Shows dailies list.
 
-`/snowy dailies check <daily>` → Toggles the daily between completed or uncompleted.
+`/snowy dailies <daily>` → Toggles the daily between completed or uncompleted.

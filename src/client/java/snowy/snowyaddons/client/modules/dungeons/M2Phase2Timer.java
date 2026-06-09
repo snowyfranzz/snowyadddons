@@ -1,5 +1,6 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ public class M2Phase2Timer {
         HudRenderCallback.EVENT.register(this::onHudRender);
 
         ChatListener.subscribe(cleanMessage -> {
+            if (!ModConfig.HANDLER.instance().m2Phase2) return;
             if (cleanMessage.contains("[BOSS] SCARF: THOSE TOYS ARE NOT STRONG ENOUGH I SEE.")) {
                 this.remainingTicks = 210;
             }
@@ -25,8 +27,7 @@ public class M2Phase2Timer {
 
     public void onTick() {
         if (this.remainingTicks > 0) {
-            float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
-            this.remainingTicks -= Math.max(1, (int) delta);
+            this.remainingTicks--;
         }
     }
 

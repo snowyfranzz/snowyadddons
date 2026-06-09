@@ -1,5 +1,6 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ public class M2SenTech {
         HudRenderCallback.EVENT.register(this::onHudRender);
 
         ChatListener.subscribe(cleanMessage -> {
+            if (!ModConfig.HANDLER.instance().m2SenTech) return;
             if (cleanMessage.contains("[BOSS] SCARF: THIS IS WHERE THE JOURNEY ENDS FOR YOU, ADVENTURERS.")) {
                 this.remainingTicks = 370;
             }

@@ -8,6 +8,7 @@ import snowy.snowyaddons.client.modules.dungeons.BloodCampHelper;
 import snowy.snowyaddons.client.modules.dungeons.M2FireFreezeTimer;
 import snowy.snowyaddons.client.modules.dungeons.M2Phase2Timer;
 import snowy.snowyaddons.client.modules.dungeons.M2SenTech;
+import snowy.snowyaddons.client.modules.fun.AutoQuakecraftOnDt;
 import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.command.ModCommandRegister;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
@@ -32,6 +33,9 @@ public class SnowyAddonsClient implements ClientModInitializer {
 
 		BloodCampHelper bcHelper = new BloodCampHelper();
 		bcHelper.registerEvents();
+
+		AutoQuakecraftOnDt autoQuake = new AutoQuakecraftOnDt();
+		autoQuake.registerEvents();
 
 
 		// every end of tick
@@ -58,9 +62,9 @@ public class SnowyAddonsClient implements ClientModInitializer {
 							bcHelper.onTick();
 						}
 
-
-
-
+						if (ModConfig.HANDLER.instance().autoQuake){
+							autoQuake.onTick();
+						}
 					}
 				}
 			}

@@ -1,5 +1,6 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -21,11 +22,10 @@ public class BloodCampHelper {
     public void registerEvents() {
         HudRenderCallback.EVENT.register(this::onHudRender);
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> this.onTick());
-
         ChatListener.subscribe(cleanMessage -> {
+            if (!ModConfig.HANDLER.instance().bcHelper) return;
             if (cleanMessage.contains("[BOSS] THE WATCHER: LET'S SEE HOW YOU HANDLE THIS!")) {
-                this.remainingTicks = 40;
+                this.remainingTicks = 45;
                 this.timerActivated = true;
             }
         });
@@ -33,8 +33,7 @@ public class BloodCampHelper {
 
     public void onTick() {
         if (this.remainingTicks > 0) {
-            float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
-            this.remainingTicks -= Math.max(1, (int) delta);
+            this.remainingTicks--;
         }
     }
 

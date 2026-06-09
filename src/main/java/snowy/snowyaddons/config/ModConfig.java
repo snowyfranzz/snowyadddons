@@ -104,6 +104,12 @@ public class ModConfig {
     @SerialEntry
     public boolean bcHelper = false;
     @SerialEntry
-    public Color bcHelperColor = new Color(255, 0, 0);
+    public Color bcHelperColor = new Color(138, 245, 117);
+
+    // ===================== FUN =====================
+    @SerialEntry
+    public boolean autoQuake = false;
+    @SerialEntry
+    public String quakePlayerName = "";
 
 }

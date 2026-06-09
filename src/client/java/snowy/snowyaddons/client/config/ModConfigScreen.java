@@ -38,8 +38,19 @@ public class ModConfigScreen {
                                         )
                                         .controller(TickBoxControllerBuilder::create)
                                         .build()) // ff timer end
+                                // ff timer color picker start
+                                .option(Option.<Color>createBuilder()
+                                        .name(Component.literal("Phase 2 Fire Freeze Color"))
+                                        .description(OptionDescription.of(Component.literal("Changes the color of the fire freeze timer.")))
+                                        .binding(
+                                                new Color(255, 0, 0),
+                                                () -> ModConfig.HANDLER.instance().m2FfColor,
+                                                newVal -> ModConfig.HANDLER.instance().m2FfColor = newVal
+                                        )
+                                        .controller(ColorControllerBuilder::create)
+                                        .build()) // ff timer color picker end
 
-                                // spray timer start
+                                // p2 timer start
                                 .option(Option.<Boolean>createBuilder()
 
                                         .name(Component.literal("Phase 2 timer"))
@@ -50,7 +61,18 @@ public class ModConfigScreen {
                                                 newVal -> ModConfig.HANDLER.instance().m2Phase2 = newVal
                                         )
                                         .controller(TickBoxControllerBuilder::create)
-                                        .build()) // spray timer end
+                                        .build()) // p2 timer end
+                                // p2 timer color picker start
+                                .option(Option.<Color>createBuilder()
+                                        .name(Component.literal("Phase 2 Color"))
+                                        .description(OptionDescription.of(Component.literal("Changes the color of the phase 2 timer.")))
+                                        .binding(
+                                                new Color(0, 140, 255),
+                                                () -> ModConfig.HANDLER.instance().m2P2Color,
+                                                newVal -> ModConfig.HANDLER.instance().m2P2Color = newVal
+                                        )
+                                        .controller(ColorControllerBuilder::create)
+                                        .build()) // p2 timer color picker end
 
                                 // sentech start
                                 .option(Option.<Boolean>createBuilder()
@@ -64,12 +86,24 @@ public class ModConfigScreen {
                                         )
                                         .controller(TickBoxControllerBuilder::create)
                                         .build()) // sentech end
+                                // sentech color picker start
+                                .option(Option.<Color>createBuilder()
+                                        .name(Component.literal("SenTech Color"))
+                                        .description(OptionDescription.of(Component.literal("Changes the color of the SenTech timer. (ts so niche <3)")))
+                                        .binding(
+                                                new Color(0, 215, 255),
+                                                () -> ModConfig.HANDLER.instance().m2SenTechColor,
+                                                newVal -> ModConfig.HANDLER.instance().m2SenTechColor = newVal
+                                        )
+                                        .controller(ColorControllerBuilder::create)
+                                        .build()) // sentech color picker end
 
                                 .build())
                         //m2 group end
 
+                        // general group start
                         .group(OptionGroup.createBuilder()
-                                .name(Component.literal("M2"))
+                                .name(Component.literal("General"))
                                 .collapsed(false)
                                 .option(Option.<Boolean>createBuilder()
 
@@ -81,8 +115,19 @@ public class ModConfigScreen {
                                                 newVal -> ModConfig.HANDLER.instance().bcHelper = newVal
                                         )
                                         .controller(TickBoxControllerBuilder::create)
-                                        .build()) // sentech end
-                                .build())
+                                        .build()) // bc helper end
+                                // bchelper color picker start
+                                .option(Option.<Color>createBuilder()
+                                        .name(Component.literal("Blood Helper Color"))
+                                        .description(OptionDescription.of(Component.literal("Changes the color of the blood camp helper timer and title.")))
+                                        .binding(
+                                                new Color(138, 245, 117),
+                                                () -> ModConfig.HANDLER.instance().bcHelperColor,
+                                                newVal -> ModConfig.HANDLER.instance().bcHelperColor = newVal
+                                        )
+                                        .controller(ColorControllerBuilder::create)
+                                        .build()) // bchelper color picker end
+                                .build()) // general group end
 
                         .build()) // dungeons category end
 
@@ -440,6 +485,37 @@ public class ModConfigScreen {
                                 .build()) // dailies - crimson isles group end
 
                         .build()) // dailies category end
+
+                // fun category start ,
+                .category(ConfigCategory.createBuilder()
+                        .name(Component.literal("Fun"))
+                        .tooltip(Component.literal("does he know?"))
+
+                        // auto quakecraft start
+                        .option(Option.<Boolean>createBuilder()
+
+                                .name(Component.literal("Auto Quakecraft"))
+                                .description(OptionDescription.of(Component.literal("Automatically sends a quakecraft duel request to a player whenever theres dt")))
+                                .binding(
+                                        false,
+                                        () -> ModConfig.HANDLER.instance().autoQuake,
+                                        newVal -> ModConfig.HANDLER.instance().autoQuake = newVal
+                                )
+                                .controller(TickBoxControllerBuilder::create)
+                                .build()) // auto quakecraft end
+
+                        // auto quakecraft player name start
+                        .option(Option.<String>createBuilder()
+                                .name(Component.literal("Auto Quakecraft Player Name"))
+                                .binding(
+                                        "", // Default value
+                                        () -> ModConfig.HANDLER.instance().quakePlayerName,
+                                        newVal -> ModConfig.HANDLER.instance().quakePlayerName = newVal
+                                )
+                                .controller(StringControllerBuilder::create)
+                                .build())//auto quakecraft player name end
+
+                        .build()) // fun category end
 
                 .build().generateScreen(parent); // mc screen
     }
