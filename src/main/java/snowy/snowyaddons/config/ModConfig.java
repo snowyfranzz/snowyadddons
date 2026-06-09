@@ -102,6 +102,9 @@ public class ModConfig {
     public Color m2SenTechColor = new Color(0, 215, 255);
 
     @SerialEntry
+    public boolean m2Splits = false;
+
+    @SerialEntry
     public boolean bcHelper = false;
     @SerialEntry
     public Color bcHelperColor = new Color(138, 245, 117);
