@@ -20,7 +20,7 @@ public class M2Phase2Timer {
         ChatListener.subscribe(cleanMessage -> {
             if (!ModConfig.HANDLER.instance().m2Phase2) return;
             if (cleanMessage.contains("[BOSS] SCARF: THOSE TOYS ARE NOT STRONG ENOUGH I SEE.")) {
-                this.remainingTicks = 210;
+                this.remainingTicks = 205;
             }
         });
     }

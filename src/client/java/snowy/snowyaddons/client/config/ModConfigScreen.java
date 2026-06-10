@@ -2,6 +2,7 @@ package snowy.snowyaddons.client.config;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.config.dailies.DailiesNotificationSendMethod;
@@ -12,6 +13,11 @@ import java.awt.*;
 public class ModConfigScreen {
 
     public static Screen create(Screen parent, ModConfig config) {
+
+        Minecraft mc = Minecraft.getInstance();
+        int maxX = mc.getWindow().getGuiScaledWidth();
+        int maxY = mc.getWindow().getGuiScaledHeight();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.literal("SnowyAddons Config"))
                 .save(ModConfig.HANDLER::save)
@@ -29,7 +35,7 @@ public class ModConfigScreen {
                                 // ff timer start
                                 .option(Option.<Boolean>createBuilder()
 
-                                        .name(Component.literal("Phase 2 Fire Freeze timer"))
+                                        .name(Component.literal("Phase 2 Fire Freeze Timer"))
                                         .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to use your fire freeze staff. Can be used to freeze scarf or the undeads!")))
                                         .binding(
                                                 false,
@@ -53,7 +59,7 @@ public class ModConfigScreen {
                                 // p2 timer start
                                 .option(Option.<Boolean>createBuilder()
 
-                                        .name(Component.literal("Phase 2 timer"))
+                                        .name(Component.literal("Phase 2 Timer"))
                                         .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when phase 2 starts. Can be used to freeze/gyro scarf or the undeads!")))
                                         .binding(
                                                 false,
@@ -77,7 +83,7 @@ public class ModConfigScreen {
                                 // sentech start
                                 .option(Option.<Boolean>createBuilder()
 
-                                        .name(Component.literal("SenTech timer"))
+                                        .name(Component.literal("SenTech Timer"))
                                         .description(OptionDescription.of(Component.literal("Draws a timer on your screen indicating when to icespray phase 1 undeads. Basically a phase 1 timer. Credits to SenTashi for finding the tech!")))
                                         .binding(
                                                 false,
@@ -98,6 +104,48 @@ public class ModConfigScreen {
                                         .controller(ColorControllerBuilder::create)
                                         .build()) // sentech color picker end
 
+                                // m2 splits start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("M2 Splits"))
+                                        .description(OptionDescription.of(Component.literal("Draws a in-depth analysis of your m2 run time, showing the time taken in every part of the run.")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().m2Splits,
+                                                newVal -> ModConfig.HANDLER.instance().m2Splits = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // m2 splits end
+
+                                .option(Option.<Integer>createBuilder()
+                                        .name(Component.literal("M2 Splits X Position"))
+                                        .description(OptionDescription.of(Component.literal("Adjust the horizontal screen offset of the splits overlay.")))
+                                        .binding(
+                                                100, // Default value
+                                                () -> ModConfig.HANDLER.instance().m2SplitsX, // Getter
+                                                val -> ModConfig.HANDLER.instance().m2SplitsX = val // Setter
+                                        )
+                                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                                .range(0, maxX)
+                                                .step(5)
+                                                .formatValue(value -> Component.literal(value + " Minutes"))
+                                        )
+                                        .build())
+
+                                .option(Option.<Integer>createBuilder()
+                                    .name(Component.literal("M2 Splits Y Position"))
+                                    .description(OptionDescription.of(Component.literal("Adjust the vertical screen offset of the splits overlay.")))
+                                    .binding(
+                                        100, // Default value
+                                        () -> ModConfig.HANDLER.instance().m2SplitsY, // Getter
+                                        val -> ModConfig.HANDLER.instance().m2SplitsY = val // Setter
+                                    )
+                                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                                .range(0, maxY)
+                                                .step(5)
+                                                .formatValue(value -> Component.literal(value + " Minutes"))
+                                        )
+                                    .build())
                                 .build())
                         //m2 group end
 

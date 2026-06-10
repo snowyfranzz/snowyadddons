@@ -61,4 +61,42 @@ public class GetServerInfo {
         }
         return false;
     }
+
+    public static String getCurrentFloor() {
+        if (!isInDungeon()) return null;
+
+        Minecraft mc = Minecraft.getInstance();
+        Scoreboard scoreboard = mc.level.getScoreboard();
+        Objective objective = scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
+
+        if (objective != null) {
+            for (PlayerScoreEntry entry : scoreboard.listPlayerScores(objective)) {
+                String fullLineText = "";
+
+                if (entry.display() != null) {
+                    fullLineText = entry.display().getString();
+                } else {
+                    String scoreHolder = entry.owner();
+                    PlayerTeam team = scoreboard.getPlayersTeam(scoreHolder);
+                    if (team != null) {
+                        fullLineText = team.getPlayerPrefix().getString() + scoreHolder + team.getPlayerSuffix().getString();
+                    } else {
+                        fullLineText = scoreHolder;
+                    }
+                }
+
+                String cleanLine = fullLineText.replaceAll("(?i)§[0-9a-fk-or]", "");
+
+                // eg. -> ⏣ The Catacombs (M2)
+                if (cleanLine.contains("The Catacombs (")) {
+                    int start = cleanLine.indexOf("(") + 1;
+                    int end = cleanLine.indexOf(")");
+                    if (start > 0 && end > start) {
+                        return cleanLine.substring(start, end).toUpperCase();
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

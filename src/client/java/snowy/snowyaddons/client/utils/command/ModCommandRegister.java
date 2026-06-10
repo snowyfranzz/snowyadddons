@@ -44,8 +44,10 @@ public class ModCommandRegister {
         CONFIG_TOGGLES.put("m2p2timer", new TogglePair("m2P2Timer", () -> ModConfig.HANDLER.instance().m2Phase2, val -> ModConfig.HANDLER.instance().m2Phase2 = val));
         CONFIG_TOGGLES.put("m2sentech", new TogglePair("m2SenTech", () -> ModConfig.HANDLER.instance().m2SenTech, val -> ModConfig.HANDLER.instance().m2SenTech = val));
         CONFIG_TOGGLES.put("bchelper", new TogglePair("m2BcHelper", () -> ModConfig.HANDLER.instance().bcHelper, val -> ModConfig.HANDLER.instance().bcHelper = val));
+        CONFIG_TOGGLES.put("m2splits", new TogglePair("m2Splits", () -> ModConfig.HANDLER.instance().m2Splits, val -> ModConfig.HANDLER.instance().m2Splits = val));
+        CONFIG_TOGGLES.put("autoquakecraft", new TogglePair("autoQuake", () -> ModConfig.HANDLER.instance().autoQuake, val -> ModConfig.HANDLER.instance().autoQuake = val));
 
-        // dailies zzzzzzzzzzzzzzzzzzzzz
+        // dailies
         DAILY_TOGGLES.put("pests", new DailyPair("Pests", () -> DataManager.INSTANCE.dailiesPestsState, val -> DataManager.INSTANCE.dailiesPestsState = val));
         DAILY_TOGGLES.put("greenhouse", new DailyPair("Greenhouse", () -> DataManager.INSTANCE.dailiesGreenhouseState, val -> DataManager.INSTANCE.dailiesGreenhouseState = val));
         DAILY_TOGGLES.put("matriarch", new DailyPair("Matriarch", () -> DataManager.INSTANCE.dailiesMatriarchState, val -> DataManager.INSTANCE.dailiesMatriarchState = val));

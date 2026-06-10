@@ -45,7 +45,7 @@ public class ModConfig {
 
     // General
     @SerialEntry
-    public boolean dailiesNotification = true;
+    public boolean dailiesNotification = false;
     @SerialEntry
     public DailiesNotificationSendMethod dailiesSendMethod = DailiesNotificationSendMethod.PER_SESSION;
     @SerialEntry
@@ -87,22 +87,26 @@ public class ModConfig {
 
     // ===================== DUNGEONS =====================
     @SerialEntry
-    public boolean m2FireFreeze = true;
+    public boolean m2FireFreeze = false;
     @SerialEntry
     public Color m2FfColor = new Color(255, 0, 0);
 
     @SerialEntry
-    public boolean m2Phase2 = true;
+    public boolean m2Phase2 = false;
     @SerialEntry
     public Color m2P2Color = new Color(0, 140, 255);
 
     @SerialEntry
-    public boolean m2SenTech = true;
+    public boolean m2SenTech = false;
     @SerialEntry
     public Color m2SenTechColor = new Color(0, 215, 255);
 
     @SerialEntry
     public boolean m2Splits = false;
+    @SerialEntry
+    public int m2SplitsX = 100;
+    @SerialEntry
+    public int m2SplitsY = 100;
 
     @SerialEntry
     public boolean bcHelper = false;

@@ -4,10 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
-import snowy.snowyaddons.client.modules.dungeons.BloodCampHelper;
-import snowy.snowyaddons.client.modules.dungeons.M2FireFreezeTimer;
-import snowy.snowyaddons.client.modules.dungeons.M2Phase2Timer;
-import snowy.snowyaddons.client.modules.dungeons.M2SenTech;
+import snowy.snowyaddons.client.modules.dungeons.*;
 import snowy.snowyaddons.client.modules.fun.AutoQuakecraftOnDt;
 import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.command.ModCommandRegister;
@@ -16,36 +13,51 @@ import snowy.snowyaddons.config.ModConfig;
 
 public class SnowyAddonsClient implements ClientModInitializer {
 
+	// FIX: Define these as class fields so the entire mod reads the exact same instances
+	public static M2FireFreezeTimer m2FfTimer;
+	public static M2Phase2Timer m2P2Timer;
+	public static M2SenTech m2SenTech;
+	public static BloodCampHelper bcHelper;
+	public static AutoQuakecraftOnDt autoQuake;
+	public static M2Splits m2Splits;
+
+	private int dungeonLeaveGraceTicks = 0;
+
 	@Override
 	public void onInitializeClient() {
 
 		ClientCommandRegistrationCallback.EVENT.register(ModCommandRegister::commandRegister);
 		ChatListener.register();
 
-		M2FireFreezeTimer m2FfTimer = new M2FireFreezeTimer();
+		// Initialize the class fields
+		m2FfTimer = new M2FireFreezeTimer();
 		m2FfTimer.registerEvents();
 
-		M2Phase2Timer m2P2Timer = new M2Phase2Timer();
+		m2P2Timer = new M2Phase2Timer();
 		m2P2Timer.registerEvents();
 
-		M2SenTech m2SenTech = new M2SenTech();
+		m2SenTech = new M2SenTech();
 		m2SenTech.registerEvents();
 
-		BloodCampHelper bcHelper = new BloodCampHelper();
+		bcHelper = new BloodCampHelper();
 		bcHelper.registerEvents();
 
-		AutoQuakecraftOnDt autoQuake = new AutoQuakecraftOnDt();
+		autoQuake = new AutoQuakecraftOnDt();
 		autoQuake.registerEvents();
 
+		m2Splits = new M2Splits();
+		m2Splits.registerEvents();
 
 		// every end of tick
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player != null && client.level != null) {
 				if (GetServerInfo.isInSkyBlock()) {
+
 					DailiesManager.sendDailiesNotification();
 
-					if (GetServerInfo.isInDungeon())
-					{
+					if (GetServerInfo.isInDungeon()) {
+						this.dungeonLeaveGraceTicks = 0;
+
 						if (ModConfig.HANDLER.instance().m2FireFreeze){
 							m2FfTimer.onTick();
 						}
@@ -64,6 +76,28 @@ public class SnowyAddonsClient implements ClientModInitializer {
 
 						if (ModConfig.HANDLER.instance().autoQuake){
 							autoQuake.onTick();
+						}
+
+						if (ModConfig.HANDLER.instance().m2Splits){
+							m2Splits.onTick();
+						}
+					} else {
+						if (!m2Splits.isReset){
+							this.dungeonLeaveGraceTicks++;
+
+							if (this.dungeonLeaveGraceTicks >= 60) {
+								m2Splits.resetValues();
+								this.dungeonLeaveGraceTicks = 0;
+							}
+						}
+					}
+				} else {
+					if (!m2Splits.isReset){
+						this.dungeonLeaveGraceTicks++;
+
+						if (this.dungeonLeaveGraceTicks >= 60) {
+							m2Splits.resetValues();
+							this.dungeonLeaveGraceTicks = 0;
 						}
 					}
 				}

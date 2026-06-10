@@ -24,7 +24,7 @@ public class BloodCampHelper {
 
         ChatListener.subscribe(cleanMessage -> {
             if (!ModConfig.HANDLER.instance().bcHelper) return;
-            if (cleanMessage.contains("[BOSS] THE WATCHER: LET'S SEE HOW YOU HANDLE THIS!")) {
+            if (cleanMessage.contains("[BOSS] THE WATCHER: LET'S SEE HOW YOU CAN HANDLE THIS.")) {
                 this.remainingTicks = 45;
                 this.timerActivated = true;
             }
