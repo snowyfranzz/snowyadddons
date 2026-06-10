@@ -121,14 +121,14 @@ public class ModConfigScreen {
                                         .name(Component.literal("M2 Splits X Position"))
                                         .description(OptionDescription.of(Component.literal("Adjust the horizontal screen offset of the splits overlay.")))
                                         .binding(
-                                                100, // Default value
-                                                () -> ModConfig.HANDLER.instance().m2SplitsX, // Getter
-                                                val -> ModConfig.HANDLER.instance().m2SplitsX = val // Setter
+                                                100,
+                                                () -> ModConfig.HANDLER.instance().m2SplitsX,
+                                                val -> ModConfig.HANDLER.instance().m2SplitsX = val
                                         )
                                         .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                                                 .range(0, maxX)
-                                                .step(5)
-                                                .formatValue(value -> Component.literal(value + " Minutes"))
+                                                .step(2)
+                                                .formatValue(value -> Component.literal(value + "px"))
                                         )
                                         .build())
 
@@ -136,14 +136,14 @@ public class ModConfigScreen {
                                     .name(Component.literal("M2 Splits Y Position"))
                                     .description(OptionDescription.of(Component.literal("Adjust the vertical screen offset of the splits overlay.")))
                                     .binding(
-                                        100, // Default value
-                                        () -> ModConfig.HANDLER.instance().m2SplitsY, // Getter
-                                        val -> ModConfig.HANDLER.instance().m2SplitsY = val // Setter
+                                        100,
+                                        () -> ModConfig.HANDLER.instance().m2SplitsY,
+                                        val -> ModConfig.HANDLER.instance().m2SplitsY = val
                                     )
                                         .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                                                 .range(0, maxY)
-                                                .step(5)
-                                                .formatValue(value -> Component.literal(value + " Minutes"))
+                                                .step(2)
+                                                .formatValue(value -> Component.literal(value + "px"))
                                         )
                                     .build())
                                 .build())
@@ -385,6 +385,18 @@ public class ModConfigScreen {
                                                 true,
                                                 () -> ModConfig.HANDLER.instance().dailiesShowGreenhouse,
                                                 newVal -> ModConfig.HANDLER.instance().dailiesShowGreenhouse = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build())
+
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Visitors"))
+                                        .description(OptionDescription.of(Component.literal("Shows visitors in the dailies message.")))
+                                        .binding(
+                                                true,
+                                                () -> ModConfig.HANDLER.instance().dailiesShowVisitors,
+                                                newVal -> ModConfig.HANDLER.instance().dailiesShowVisitors = newVal
                                         )
                                         .controller(TickBoxControllerBuilder::create)
                                         .build())

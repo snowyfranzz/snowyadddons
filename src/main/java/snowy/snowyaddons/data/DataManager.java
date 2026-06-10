@@ -44,6 +44,7 @@ public class DataManager {
     public static class DailiesData {
         public boolean dailiesPestsState = false;
         public boolean dailiesGreenhouseState = false;
+        public boolean dailiesVisitorState = false;
         public boolean dailiesMatriarchState = false;
         public boolean dailiesReputationState = false;
         public boolean dailiesBottleFlipState = false;
@@ -61,6 +62,7 @@ public class DataManager {
         public static List<Supplier<Boolean>> dailiesGlobalState = List.of(
                 () -> DataManager.INSTANCE.dailiesPestsState,
                 () -> DataManager.INSTANCE.dailiesGreenhouseState,
+                () -> DataManager.INSTANCE.dailiesVisitorState,
                 () -> DataManager.INSTANCE.dailiesMatriarchState,
                 () -> DataManager.INSTANCE.dailiesReputationState,
                 () -> DataManager.INSTANCE.dailiesBottleFlipState,
@@ -82,6 +84,7 @@ public class DataManager {
             return List.of(
                     new DailyTracker(data.dailiesPestsState, config.dailiesShowPests),
                     new DailyTracker(data.dailiesGreenhouseState, config.dailiesShowGreenhouse),
+                    new DailyTracker(data.dailiesVisitorState, config.dailiesShowVisitors),
                     new DailyTracker(data.dailiesMatriarchState, config.dailiesShowMatriarch),
                     new DailyTracker(data.dailiesReputationState, config.dailiesShowReputation),
                     new DailyTracker(data.dailiesBottleFlipState, config.dailiesShowBottlesFlip),
@@ -119,6 +122,7 @@ public class DataManager {
 
             INSTANCE.dailiesPestsState = false;
             INSTANCE.dailiesGreenhouseState = false;
+            INSTANCE.dailiesVisitorState = false;
             INSTANCE.dailiesMatriarchState = false;
             INSTANCE.dailiesReputationState = false;
             INSTANCE.dailiesBottleFlipState = false;

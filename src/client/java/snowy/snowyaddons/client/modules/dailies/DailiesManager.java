@@ -20,6 +20,7 @@ public class DailiesManager {
     Farming:
         - Pests
         - Greenhouse
+        - Visitors
 
     Crimson isles:
         - Matriarch
@@ -45,6 +46,7 @@ public class DailiesManager {
     public static List<Supplier<Boolean>> dailiesToggled = List.of(
             () -> config.dailiesShowPests,
             () -> config.dailiesShowGreenhouse,
+            () -> config.dailiesShowVisitors,
             () -> config.dailiesShowMatriarch,
             () -> config.dailiesShowReputation,
             () -> config.dailiesShowBottlesFlip,
@@ -60,6 +62,7 @@ public class DailiesManager {
     public static List<Supplier<Boolean>> dailiesCompletionState = List.of(
             () -> DataManager.INSTANCE.dailiesPestsState,
             () -> DataManager.INSTANCE.dailiesGreenhouseState,
+            () -> DataManager.INSTANCE.dailiesVisitorState,
             () -> DataManager.INSTANCE.dailiesMatriarchState,
             () -> DataManager.INSTANCE.dailiesReputationState,
             () -> DataManager.INSTANCE.dailiesBottleFlipState,
@@ -76,6 +79,7 @@ public class DailiesManager {
     public static List<String> dailiesNames = List.of(
             "Pests",
             "Greenhouse",
+            "Visitors",
             "Matriarch (Heavy Pearls)",
             "Faction Reputation Quests",
             "Grand EXP Bottles Flip (Mage Faction)",

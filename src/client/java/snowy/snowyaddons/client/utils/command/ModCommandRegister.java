@@ -50,6 +50,7 @@ public class ModCommandRegister {
         // dailies
         DAILY_TOGGLES.put("pests", new DailyPair("Pests", () -> DataManager.INSTANCE.dailiesPestsState, val -> DataManager.INSTANCE.dailiesPestsState = val));
         DAILY_TOGGLES.put("greenhouse", new DailyPair("Greenhouse", () -> DataManager.INSTANCE.dailiesGreenhouseState, val -> DataManager.INSTANCE.dailiesGreenhouseState = val));
+        DAILY_TOGGLES.put("visitors", new DailyPair("Visitors", () -> DataManager.INSTANCE.dailiesVisitorState, val -> DataManager.INSTANCE.dailiesVisitorState = val));
         DAILY_TOGGLES.put("matriarch", new DailyPair("Matriarch", () -> DataManager.INSTANCE.dailiesMatriarchState, val -> DataManager.INSTANCE.dailiesMatriarchState = val));
         DAILY_TOGGLES.put("factionreputation", new DailyPair("Faction Reputation Quests", () -> DataManager.INSTANCE.dailiesReputationState, val -> DataManager.INSTANCE.dailiesReputationState = val));
         DAILY_TOGGLES.put("expbottleflip", new DailyPair("Grand EXP Bottles Flip", () -> DataManager.INSTANCE.dailiesBottleFlipState, val -> DataManager.INSTANCE.dailiesBottleFlipState = val));

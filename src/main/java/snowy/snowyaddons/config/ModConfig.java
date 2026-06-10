@@ -58,6 +58,8 @@ public class ModConfig {
     public boolean dailiesShowPests = true;
     @SerialEntry
     public boolean dailiesShowGreenhouse = true;
+    @SerialEntry
+    public boolean dailiesShowVisitors = true;
 
     // Crimson isles
     @SerialEntry
