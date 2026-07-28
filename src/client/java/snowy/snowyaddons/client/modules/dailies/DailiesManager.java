@@ -164,7 +164,7 @@ public class DailiesManager {
                     .copy()
                     .append(dailiesListBuilder());
 
-            Minecraft.getInstance().player.displayClientMessage(notificationMessage, false);
+            Minecraft.getInstance().player.sendSystemMessage(notificationMessage);
 
             if (config.dailiesSendMethod == DailiesNotificationSendMethod.ONCE_PER_DAY) {
 

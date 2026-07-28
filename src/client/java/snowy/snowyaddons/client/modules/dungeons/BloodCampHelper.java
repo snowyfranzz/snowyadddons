@@ -1,12 +1,13 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.SoundUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
@@ -20,7 +21,10 @@ public class BloodCampHelper {
     private boolean timerActivated = false;
 
     public void registerEvents() {
-        HudRenderCallback.EVENT.register(this::onHudRender);
+        HudElementRegistry.addLast(
+                Identifier.fromNamespaceAndPath("snowyaddons", "blood_camp_helper"),
+                this::onHudRender
+        );
 
         ChatListener.subscribe(cleanMessage -> {
             if (!ModConfig.HANDLER.instance().bcHelper) return;
@@ -37,7 +41,7 @@ public class BloodCampHelper {
         }
     }
 
-    public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public void onHudRender(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer localPlayer = mc.player;
 
