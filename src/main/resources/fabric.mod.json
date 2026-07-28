@@ -3,7 +3,7 @@
 	"id": "snowyaddons",
 	"version": "1.1.0",
 	"name": "SnowyAddons",
-	"description": "A Hypixel Skyblock QOL Mod for 1.21.11. \nMade with <3 by snowy.",
+	"description": "A Hypixel Skyblock QOL Mod for 26.2. \nMade with <3 by snowy.",
 
 	"authors": [
 		"SnowyFranzz"
@@ -34,10 +34,10 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.19.2",
-		"yet_another_config_lib_v3": ">=3.8.2",
-		"minecraft": "~1.21.11",
-		"java": ">=21",
+		"fabricloader": ">=0.19.3",
+		"yet_another_config_lib_v3": ">=3.9.5",
+		"minecraft": "~26.2",
+		"java": ">=25",
 		"fabric-api": "*"
 	}
 }

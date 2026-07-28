@@ -1,7 +1,7 @@
 package snowy.snowyaddons.client.utils;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Style;
@@ -12,12 +12,12 @@ import java.awt.*;
 
 public class HudRendererUtil {
 
-    public static void renderText(GuiGraphics guiGraphics, Component text, int x, int y, Color color, boolean shadow) {
+    public static void renderText(GuiGraphicsExtractor guiGraphics, Component text, int x, int y, Color color, boolean shadow) {
         Font font = Minecraft.getInstance().font;
 
         int renderColor = ColorUtil.getDecimalFromColor(color);
 
-        guiGraphics.drawString(font, text, x, y, renderColor, shadow);
+        guiGraphics.text(font, text, x, y, renderColor, shadow);
     }
 
     public static void displayTitle(String mainTitle, String subTitle, int fadeIn, int stay, int fadeOut, Color color) {
@@ -33,14 +33,14 @@ public class HudRendererUtil {
         Component finalSub = subTitle != null ? Component.literal(subTitle) : null;
 
         // animation ticks
-        mc.gui.setTimes(fadeIn, stay, fadeOut);
+        mc.gui.hud.setTimes(fadeIn, stay, fadeOut);
 
         // subtitle
         if (subTitle != null && !subTitle.isEmpty()) {
-            mc.gui.setSubtitle(finalSub);
+            mc.gui.hud.setSubtitle(finalSub);
         }
 
         // title
-        mc.gui.setTitle(finalTitle);
+        mc.gui.hud.setTitle(finalTitle);
     }
 }

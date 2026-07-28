@@ -1,11 +1,12 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
 import snowy.snowyaddons.config.ModConfig;
@@ -42,7 +43,10 @@ public class M2Splits {
     private boolean flagEndTriggered = false;
 
     public void registerEvents() {
-        HudRenderCallback.EVENT.register(this::onHudRender);
+        HudElementRegistry.addLast(
+                Identifier.fromNamespaceAndPath("snowyaddons", "m2_splits"),
+                this::onHudRender
+        );
 
         ChatListener.subscribe(cleanMessage -> {
             if (!ModConfig.HANDLER.instance().m2Splits) return;
@@ -142,7 +146,7 @@ public class M2Splits {
         }
     }
 
-    public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public void onHudRender(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         if (!ModConfig.HANDLER.instance().m2Splits || !this.flagStart) return;
 
         int startX = ModConfig.HANDLER.instance().m2SplitsX;
@@ -206,7 +210,7 @@ public class M2Splits {
         }
     }
 
-    public int[] getDefaultPositions(GuiGraphics guiGraphics) {
+    public int[] getDefaultPositions(GuiGraphicsExtractor guiGraphics) {
         int screenWidth = guiGraphics.guiWidth();
         int screenHeight = guiGraphics.guiHeight();
 
