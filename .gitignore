@@ -38,3 +38,6 @@ logs/
 # mac files </3
 .DS_Store
 thumbs.db
+
+# claude
+CLAUDE.md

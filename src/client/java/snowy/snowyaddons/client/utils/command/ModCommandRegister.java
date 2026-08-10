@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
@@ -72,18 +72,18 @@ public class ModCommandRegister {
     }
 
     public static void commandRegister(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandBuildContext registryAccess) {
-        dispatcher.register(ClientCommandManager.literal("snowy")
+        dispatcher.register(ClientCommands.literal("snowy")
                 .executes(context -> openConfigScreen())
 
-                .then(ClientCommandManager.literal("config")
+                .then(ClientCommands.literal("config")
                         .executes(context -> openConfigScreen())
                 )
 
-                .then(ClientCommandManager.literal("help")
+                .then(ClientCommands.literal("help")
                         .executes(ModCommandRegister::handleHelpCommand)
                 )
 
-                .then(ClientCommandManager.literal("version")
+                .then(ClientCommands.literal("version")
                         .executes(context -> {
                             String version = FabricLoader.getInstance()
                                     .getModContainer(MOD_ID)
@@ -96,7 +96,7 @@ public class ModCommandRegister {
                         })
                 )
 
-                .then(ClientCommandManager.literal("boop")
+                .then(ClientCommands.literal("boop")
                         .executes(context -> {
                             context.getSource().sendFeedback(Component.literal("Boop!").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
                             return 1;
@@ -104,8 +104,8 @@ public class ModCommandRegister {
                 )
 
                 // --- TOGGLE HANDLER ---
-                .then(ClientCommandManager.literal("toggle")
-                        .then(ClientCommandManager.argument("module", StringArgumentType.word())
+                .then(ClientCommands.literal("toggle")
+                        .then(ClientCommands.argument("module", StringArgumentType.word())
                                 .suggests((ctx, cb) -> suggestFromMap(cb, CONFIG_TOGGLES))
                                 .executes(context -> {
                                     String input = StringArgumentType.getString(context, "module").toLowerCase();
@@ -131,8 +131,8 @@ public class ModCommandRegister {
                 )
 
                 // --- DAILIES HANDLER ---
-                .then(ClientCommandManager.literal("dailies")
-                        .then(ClientCommandManager.argument("option", StringArgumentType.word())
+                .then(ClientCommands.literal("dailies")
+                        .then(ClientCommands.argument("option", StringArgumentType.word())
                                 .suggests((ctx, cb) -> suggestFromMap(cb, DAILY_TOGGLES))
                                 .executes(context -> {
                                     String input = StringArgumentType.getString(context, "option").toLowerCase();
@@ -166,8 +166,8 @@ public class ModCommandRegister {
 
     private static int openConfigScreen() {
         mc.execute(() -> {
-            Screen configScreen = ModConfigScreen.create(mc.screen, ModConfig.HANDLER.instance());
-            mc.setScreen(configScreen);
+            Screen configScreen = ModConfigScreen.create(mc.gui.screen(), ModConfig.HANDLER.instance());
+            mc.gui.setScreen(configScreen);
         });
         return 1;
     }

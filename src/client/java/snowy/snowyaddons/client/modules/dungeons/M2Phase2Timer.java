@@ -1,12 +1,13 @@
 package snowy.snowyaddons.client.modules.dungeons;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import snowy.snowyaddons.client.utils.HudRendererUtil;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
 import snowy.snowyaddons.config.ModConfig;
@@ -15,7 +16,10 @@ public class M2Phase2Timer {
     private int remainingTicks = 0;
 
     public void registerEvents() {
-        HudRenderCallback.EVENT.register(this::onHudRender);
+        HudElementRegistry.addLast(
+                Identifier.fromNamespaceAndPath("snowyaddons", "m2_phase2_timer"),
+                this::onHudRender
+        );
 
         ChatListener.subscribe(cleanMessage -> {
             if (!ModConfig.HANDLER.instance().m2Phase2) return;
@@ -31,7 +35,7 @@ public class M2Phase2Timer {
         }
     }
 
-    public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public void onHudRender(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer localPlayer = mc.player;
 
