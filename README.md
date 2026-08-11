@@ -1,5 +1,5 @@
 # ❄️ SnowyAddons
-<img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total'> <img src='https://img.shields.io/badge/release-1.1.0-green'>
+<img src='https://img.shields.io/github/downloads/snowyfranzz/snowyaddons/total'> <img src='https://img.shields.io/badge/release-1.0.0-green'>
 
 
 SnowyAddons is a mod for Hypixel Skyblock that adds some useful QOL modules to enhance your experience!
@@ -43,13 +43,10 @@ SnowyAddons directly depends on **YACL** for its config system. It is also recom
 | Module              | Description                                                                    |
 |:--------------------|:-------------------------------------------------------------------------------|
 | **Auto Quakecraft** | Automatically sends a quakecraft duel request to someone when there's downtime |
-
-### 🎵 Jukebox
-| Module      | Description                                                                                                                                          |
-|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Jukebox** | Plays your own `.wav` files as a per-island playlist, starting a few seconds after you arrive on that island. Fully controllable via chat commands. |
 
 
+## ⚙️ Commands
 ## ⚙️ Commands
 `/snowy` → Opens the mod screen.
 

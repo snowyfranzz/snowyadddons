@@ -575,85 +575,86 @@ public class ModConfigScreen {
                                 .controller(StringControllerBuilder::create)
                                 .build())//auto quakecraft player name end
 
+                        // jukebox group start
+                        .group(OptionGroup.createBuilder()
+                                .name(Component.literal("Jukebox"))
+                                .description(OptionDescription.of(Component.literal("Plays your own music per-island. Manage playlists with /snowy jukebox <play|pause|skip|status|islands|files|folder|playlist|add|remove>.")))
+                                .collapsed(true)
+
+                                // jukebox enabled start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Enable Jukebox"))
+                                        .description(OptionDescription.of(Component.literal("Toggles island music. Drop .wav files into the folder opened by /snowy jukebox folder, then add them to an island's playlist with /snowy jukebox add <island> <file>.")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().jukeboxEnabled,
+                                                newVal -> ModConfig.HANDLER.instance().jukeboxEnabled = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // jukebox enabled end
+
+                                // jukebox volume start
+                                .option(Option.<Integer>createBuilder()
+                                        .name(Component.literal("Volume"))
+                                        .description(OptionDescription.of(Component.literal("Playback volume for jukebox tracks.")))
+                                        .binding(
+                                                50,
+                                                () -> ModConfig.HANDLER.instance().jukeboxVolume,
+                                                newVal -> ModConfig.HANDLER.instance().jukeboxVolume = newVal
+                                        )
+                                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                                .range(0, 100)
+                                                .step(1)
+                                                .formatValue(value -> Component.literal(value + "%"))
+                                        )
+                                        .build()) // jukebox volume end
+
+                                // jukebox start delay start
+                                .option(Option.<Integer>createBuilder()
+                                        .name(Component.literal("Start Delay"))
+                                        .description(OptionDescription.of(Component.literal("How long to wait after entering an island before its playlist starts playing.")))
+                                        .binding(
+                                                5,
+                                                () -> ModConfig.HANDLER.instance().jukeboxStartDelaySeconds,
+                                                newVal -> ModConfig.HANDLER.instance().jukeboxStartDelaySeconds = newVal
+                                        )
+                                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                                .range(0, 60)
+                                                .step(1)
+                                                .formatValue(value -> Component.literal(value + "s"))
+                                        )
+                                        .build()) // jukebox start delay end
+
+                                // jukebox shuffle start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Shuffle Playlists"))
+                                        .description(OptionDescription.of(Component.literal("Randomizes track order within each island's playlist instead of playing them in the order they were added.")))
+                                        .binding(
+                                                false,
+                                                () -> ModConfig.HANDLER.instance().jukeboxShuffle,
+                                                newVal -> ModConfig.HANDLER.instance().jukeboxShuffle = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // jukebox shuffle end
+
+                                // jukebox announce start
+                                .option(Option.<Boolean>createBuilder()
+
+                                        .name(Component.literal("Announce Track Changes"))
+                                        .description(OptionDescription.of(Component.literal("Shows a toast notification with the current track name whenever it changes.")))
+                                        .binding(
+                                                true,
+                                                () -> ModConfig.HANDLER.instance().jukeboxAnnounceTrack,
+                                                newVal -> ModConfig.HANDLER.instance().jukeboxAnnounceTrack = newVal
+                                        )
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build()) // jukebox announce end
+
+                                .build()) // jukebox group end
+
                         .build()) // fun category end
-
-                // jukebox category start
-                .category(ConfigCategory.createBuilder()
-                        .name(Component.literal("Jukebox"))
-                        .tooltip(Component.literal("Plays your own music per-island. Manage playlists with /snowy jukebox <play|pause|skip|status|islands|files|folder|playlist|add|remove>."))
-
-                        // jukebox enabled start
-                        .option(Option.<Boolean>createBuilder()
-
-                                .name(Component.literal("Enable Jukebox"))
-                                .description(OptionDescription.of(Component.literal("Toggles island music. Drop .wav files into the folder opened by /snowy jukebox folder, then add them to an island's playlist with /snowy jukebox add <island> <file>.")))
-                                .binding(
-                                        false,
-                                        () -> ModConfig.HANDLER.instance().jukeboxEnabled,
-                                        newVal -> ModConfig.HANDLER.instance().jukeboxEnabled = newVal
-                                )
-                                .controller(TickBoxControllerBuilder::create)
-                                .build()) // jukebox enabled end
-
-                        // jukebox volume start
-                        .option(Option.<Integer>createBuilder()
-                                .name(Component.literal("Volume"))
-                                .description(OptionDescription.of(Component.literal("Playback volume for jukebox tracks.")))
-                                .binding(
-                                        50,
-                                        () -> ModConfig.HANDLER.instance().jukeboxVolume,
-                                        newVal -> ModConfig.HANDLER.instance().jukeboxVolume = newVal
-                                )
-                                .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                                        .range(0, 100)
-                                        .step(1)
-                                        .formatValue(value -> Component.literal(value + "%"))
-                                )
-                                .build()) // jukebox volume end
-
-                        // jukebox start delay start
-                        .option(Option.<Integer>createBuilder()
-                                .name(Component.literal("Start Delay"))
-                                .description(OptionDescription.of(Component.literal("How long to wait after entering an island before its playlist starts playing.")))
-                                .binding(
-                                        5,
-                                        () -> ModConfig.HANDLER.instance().jukeboxStartDelaySeconds,
-                                        newVal -> ModConfig.HANDLER.instance().jukeboxStartDelaySeconds = newVal
-                                )
-                                .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                                        .range(0, 60)
-                                        .step(1)
-                                        .formatValue(value -> Component.literal(value + "s"))
-                                )
-                                .build()) // jukebox start delay end
-
-                        // jukebox shuffle start
-                        .option(Option.<Boolean>createBuilder()
-
-                                .name(Component.literal("Shuffle Playlists"))
-                                .description(OptionDescription.of(Component.literal("Randomizes track order within each island's playlist instead of playing them in the order they were added.")))
-                                .binding(
-                                        false,
-                                        () -> ModConfig.HANDLER.instance().jukeboxShuffle,
-                                        newVal -> ModConfig.HANDLER.instance().jukeboxShuffle = newVal
-                                )
-                                .controller(TickBoxControllerBuilder::create)
-                                .build()) // jukebox shuffle end
-
-                        // jukebox announce start
-                        .option(Option.<Boolean>createBuilder()
-
-                                .name(Component.literal("Announce Track Changes"))
-                                .description(OptionDescription.of(Component.literal("Shows a toast notification with the current track name whenever it changes.")))
-                                .binding(
-                                        true,
-                                        () -> ModConfig.HANDLER.instance().jukeboxAnnounceTrack,
-                                        newVal -> ModConfig.HANDLER.instance().jukeboxAnnounceTrack = newVal
-                                )
-                                .controller(TickBoxControllerBuilder::create)
-                                .build()) // jukebox announce end
-
-                        .build()) // jukebox category end
 
                 .build().generateScreen(parent); // mc screen
     }
