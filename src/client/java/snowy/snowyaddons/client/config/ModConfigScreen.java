@@ -644,7 +644,7 @@ public class ModConfigScreen {
                         .option(Option.<Boolean>createBuilder()
 
                                 .name(Component.literal("Announce Track Changes"))
-                                .description(OptionDescription.of(Component.literal("Shows the current track name in your action bar whenever it changes.")))
+                                .description(OptionDescription.of(Component.literal("Shows a toast notification with the current track name whenever it changes.")))
                                 .binding(
                                         true,
                                         () -> ModConfig.HANDLER.instance().jukeboxAnnounceTrack,

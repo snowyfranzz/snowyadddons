@@ -2,6 +2,7 @@ package snowy.snowyaddons.client.modules.jukebox;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.network.chat.Component;
 import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.SkyblockIsland;
@@ -24,6 +25,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * directly from the callback.
  */
 public class JukeboxManager {
+    private static final SystemToast.SystemToastId NOW_PLAYING_TOAST_ID = new SystemToast.SystemToastId();
+
     private final JukeboxPlayer player = new JukeboxPlayer();
     private final AtomicBoolean trackFinished = new AtomicBoolean(false);
 
@@ -106,7 +109,7 @@ public class JukeboxManager {
             currentTrackName = filename;
 
             if (ModConfig.HANDLER.instance().jukeboxAnnounceTrack) {
-                announce("Now playing: " + filename);
+                announceTrack(filename);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,10 +119,21 @@ public class JukeboxManager {
         }
     }
 
-    private void announce(String text) {
+    private void announceTrack(String filename) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
-        mc.player.sendOverlayMessage(Component.literal("♪ " + text).withStyle(ChatFormatting.LIGHT_PURPLE));
+
+        SystemToast.add(
+                mc.gui.toastManager(),
+                NOW_PLAYING_TOAST_ID,
+                Component.literal("Now Playing:").withStyle(ChatFormatting.LIGHT_PURPLE),
+                Component.literal(stripExtension(filename))
+        );
+    }
+
+    private static String stripExtension(String filename) {
+        int dot = filename.lastIndexOf('.');
+        return dot > 0 ? filename.substring(0, dot) : filename;
     }
 
     private void stopPlayback() {
