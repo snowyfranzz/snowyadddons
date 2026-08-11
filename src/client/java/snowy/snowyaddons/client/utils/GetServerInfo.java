@@ -3,6 +3,9 @@ package snowy.snowyaddons.client.utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.scores.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GetServerInfo {
 
     public static boolean isInSkyBlock() {
@@ -139,5 +142,43 @@ public class GetServerInfo {
         if (isInDungeon()) return SkyblockIsland.THE_CATACOMBS;
 
         return SkyblockIsland.UNKNOWN;
+    }
+
+    /**
+     * Raw, color-code-stripped (but NOT uppercased) sidebar lines, title first. Exists purely for
+     * troubleshooting scoreboard-scraping bugs (see /snowy jukebox debug) since Hypixel's exact
+     * text formatting can't be verified outside of a live client.
+     */
+    public static List<String> getSidebarLines() {
+        List<String> lines = new ArrayList<>();
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return lines;
+
+        Scoreboard scoreboard = mc.level.getScoreboard();
+        Objective objective = scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
+        if (objective == null) return lines;
+
+        lines.add("[title] " + objective.getDisplayName().getString().replaceAll("(?i)§[0-9a-fk-or]", ""));
+
+        for (PlayerScoreEntry entry : scoreboard.listPlayerScores(objective)) {
+            String fullLineText;
+
+            if (entry.display() != null) {
+                fullLineText = entry.display().getString();
+            } else {
+                String scoreHolder = entry.owner();
+                PlayerTeam team = scoreboard.getPlayersTeam(scoreHolder);
+                if (team != null) {
+                    fullLineText = team.getPlayerPrefix().getString() + scoreHolder + team.getPlayerSuffix().getString();
+                } else {
+                    fullLineText = scoreHolder;
+                }
+            }
+
+            lines.add(fullLineText.replaceAll("(?i)§[0-9a-fk-or]", ""));
+        }
+
+        return lines;
     }
 }
