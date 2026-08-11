@@ -12,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.time.LocalDate;
 
@@ -58,6 +60,9 @@ public class DataManager {
 
         public JsonDate lastDailyDate = new JsonDate();
         public JsonDate lastLoginDate = new JsonDate();
+
+        // island id -> ordered list of audio filenames (from the jukebox_audio folder) to play there
+        public Map<String, List<String>> jukeboxPlaylists = new HashMap<>();
 
         public static List<Supplier<Boolean>> dailiesGlobalState = List.of(
                 () -> DataManager.INSTANCE.dailiesPestsState,

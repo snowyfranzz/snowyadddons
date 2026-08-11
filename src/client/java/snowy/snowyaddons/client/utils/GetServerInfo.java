@@ -99,4 +99,45 @@ public class GetServerInfo {
         }
         return null;
     }
+
+    public static SkyblockIsland getCurrentIsland() {
+        if (!isInSkyBlock()) return SkyblockIsland.UNKNOWN;
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return SkyblockIsland.UNKNOWN;
+
+        Scoreboard scoreboard = mc.level.getScoreboard();
+        Objective objective = scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
+
+        if (objective != null) {
+            for (PlayerScoreEntry entry : scoreboard.listPlayerScores(objective)) {
+                String fullLineText;
+
+                if (entry.display() != null) {
+                    fullLineText = entry.display().getString();
+                } else {
+                    String scoreHolder = entry.owner();
+                    PlayerTeam team = scoreboard.getPlayersTeam(scoreHolder);
+                    if (team != null) {
+                        fullLineText = team.getPlayerPrefix().getString() + scoreHolder + team.getPlayerSuffix().getString();
+                    } else {
+                        fullLineText = scoreHolder;
+                    }
+                }
+
+                String cleanLine = fullLineText.replaceAll("(?i)§[0-9a-fk-or]", "").toUpperCase();
+
+                // eg. -> Area: Hub
+                if (cleanLine.contains("AREA:")) {
+                    String areaText = cleanLine.substring(cleanLine.indexOf("AREA:") + "AREA:".length()).trim();
+                    return SkyblockIsland.fromAreaLine(areaText);
+                }
+            }
+        }
+
+        // dungeons overwrite the Area line with the floor name instead
+        if (isInDungeon()) return SkyblockIsland.THE_CATACOMBS;
+
+        return SkyblockIsland.UNKNOWN;
+    }
 }

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
 import snowy.snowyaddons.client.modules.dungeons.*;
 import snowy.snowyaddons.client.modules.fun.AutoQuakecraftOnDt;
+import snowy.snowyaddons.client.modules.jukebox.JukeboxManager;
 import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.command.ModCommandRegister;
 import snowy.snowyaddons.client.utils.listeners.ChatListener;
@@ -20,6 +21,7 @@ public class SnowyAddonsClient implements ClientModInitializer {
 	public static BloodCampHelper bcHelper;
 	public static AutoQuakecraftOnDt autoQuake;
 	public static M2Splits m2Splits;
+	public static JukeboxManager jukebox;
 
 	private int dungeonLeaveGraceTicks = 0;
 
@@ -48,9 +50,14 @@ public class SnowyAddonsClient implements ClientModInitializer {
 		m2Splits = new M2Splits();
 		m2Splits.registerEvents();
 
+		jukebox = new JukeboxManager();
+		jukebox.registerEvents();
+
 		// every end of tick
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player != null && client.level != null) {
+				jukebox.onTick();
+
 				if (GetServerInfo.isInSkyBlock()) {
 
 					DailiesManager.sendDailiesNotification();

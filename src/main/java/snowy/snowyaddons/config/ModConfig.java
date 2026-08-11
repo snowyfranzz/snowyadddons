@@ -121,4 +121,16 @@ public class ModConfig {
     @SerialEntry
     public String quakePlayerName = "";
 
+    // ===================== JUKEBOX =====================
+    @SerialEntry
+    public boolean jukeboxEnabled = false;
+    @SerialEntry
+    public int jukeboxVolume = 50;
+    @SerialEntry
+    public int jukeboxStartDelaySeconds = 5;
+    @SerialEntry
+    public boolean jukeboxShuffle = false;
+    @SerialEntry
+    public boolean jukeboxAnnounceTrack = true;
+
 }

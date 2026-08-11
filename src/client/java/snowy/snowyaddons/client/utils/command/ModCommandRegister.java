@@ -14,12 +14,18 @@ import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Util;
+import snowy.snowyaddons.client.SnowyAddonsClient;
 import snowy.snowyaddons.client.config.ModConfigScreen;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
+import snowy.snowyaddons.client.utils.SkyblockIsland;
+import snowy.snowyaddons.client.utils.audio.JukeboxAudioLibrary;
 import snowy.snowyaddons.config.ModConfig;
 import snowy.snowyaddons.data.DataManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -161,6 +167,46 @@ public class ModCommandRegister {
                             return 1;
                         })
                 )
+
+                // --- JUKEBOX HANDLER ---
+                .then(ClientCommands.literal("jukebox")
+                        .then(ClientCommands.literal("play").executes(ModCommandRegister::handleJukeboxPlay))
+                        .then(ClientCommands.literal("pause").executes(ModCommandRegister::handleJukeboxPause))
+                        .then(ClientCommands.literal("skip").executes(ModCommandRegister::handleJukeboxSkip))
+                        .then(ClientCommands.literal("status").executes(ModCommandRegister::handleJukeboxStatus))
+                        .then(ClientCommands.literal("islands").executes(ModCommandRegister::handleJukeboxIslands))
+                        .then(ClientCommands.literal("files").executes(ModCommandRegister::handleJukeboxFiles))
+                        .then(ClientCommands.literal("folder").executes(ModCommandRegister::handleJukeboxFolder))
+
+                        .then(ClientCommands.literal("playlist")
+                                .then(ClientCommands.argument("island", StringArgumentType.word())
+                                        .suggests(ModCommandRegister::suggestIslands)
+                                        .executes(ModCommandRegister::handleJukeboxPlaylist))
+                        )
+
+                        .then(ClientCommands.literal("add")
+                                .then(ClientCommands.argument("island", StringArgumentType.word())
+                                        .suggests(ModCommandRegister::suggestIslands)
+                                        .then(ClientCommands.argument("file", StringArgumentType.greedyString())
+                                                .suggests(ModCommandRegister::suggestAudioFiles)
+                                                .executes(ModCommandRegister::handleJukeboxAdd))
+                                )
+                        )
+
+                        .then(ClientCommands.literal("remove")
+                                .then(ClientCommands.argument("island", StringArgumentType.word())
+                                        .suggests(ModCommandRegister::suggestIslands)
+                                        .then(ClientCommands.argument("file", StringArgumentType.greedyString())
+                                                .suggests(ModCommandRegister::suggestPlaylistFiles)
+                                                .executes(ModCommandRegister::handleJukeboxRemove))
+                                )
+                        )
+
+                        .executes(context -> {
+                            context.getSource().sendFeedback(Component.literal("Usage: /snowy jukebox <play|pause|skip|status|islands|files|folder|playlist|add|remove>").withStyle(ChatFormatting.DARK_RED));
+                            return 1;
+                        })
+                )
         );
     }
 
@@ -185,6 +231,7 @@ public class ModCommandRegister {
         source.sendFeedback(Component.literal("  /snowy boop -> Replies with a Boop!").withStyle(ChatFormatting.DARK_GREEN));
         source.sendFeedback(Component.literal("  /snowy toggle <module> -> Enables / Disables a module.").withStyle(ChatFormatting.DARK_GREEN));
         source.sendFeedback(Component.literal("  /snowy dailies <option> -> Lists dailies and toggles them.").withStyle(ChatFormatting.DARK_GREEN));
+        source.sendFeedback(Component.literal("  /snowy jukebox <play|pause|skip|status|islands|files|folder|playlist|add|remove> -> Manages per-island music playlists.").withStyle(ChatFormatting.DARK_GREEN));
         source.sendFeedback(Component.literal(linesFormattedToWidth).withStyle(ChatFormatting.DARK_GREEN));
         return 1;
     }
@@ -192,6 +239,152 @@ public class ModCommandRegister {
     private static CompletableFuture<Suggestions> suggestFromMap(SuggestionsBuilder builder, Map<String, ?> map) {
         for (String key : map.keySet()) {
             builder.suggest(key);
+        }
+        return builder.buildFuture();
+    }
+
+    // --- JUKEBOX ---
+
+    private static int handleJukeboxPlay(CommandContext<FabricClientCommandSource> context) {
+        SnowyAddonsClient.jukebox.play();
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Jukebox resumed.").withStyle(ChatFormatting.AQUA));
+        return 1;
+    }
+
+    private static int handleJukeboxPause(CommandContext<FabricClientCommandSource> context) {
+        SnowyAddonsClient.jukebox.pause();
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Jukebox paused.").withStyle(ChatFormatting.AQUA));
+        return 1;
+    }
+
+    private static int handleJukeboxSkip(CommandContext<FabricClientCommandSource> context) {
+        SnowyAddonsClient.jukebox.skip();
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Skipped to the next track.").withStyle(ChatFormatting.AQUA));
+        return 1;
+    }
+
+    private static int handleJukeboxStatus(CommandContext<FabricClientCommandSource> context) {
+        context.getSource().sendFeedback(SnowyAddonsClient.jukebox.getStatusMessage());
+        return 1;
+    }
+
+    private static int handleJukeboxIslands(CommandContext<FabricClientCommandSource> context) {
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Islands:").withStyle(ChatFormatting.AQUA));
+        for (SkyblockIsland island : SkyblockIsland.values()) {
+            if (island == SkyblockIsland.UNKNOWN) continue;
+            context.getSource().sendFeedback(Component.literal(" - " + island.getId() + " (" + island.getDisplayName() + ")").withStyle(ChatFormatting.GRAY));
+        }
+        return 1;
+    }
+
+    private static int handleJukeboxFiles(CommandContext<FabricClientCommandSource> context) {
+        List<String> files = JukeboxAudioLibrary.listAudioFiles();
+        if (files.isEmpty()) {
+            context.getSource().sendFeedback(Component.literal("[SnowyAddons] No .wav files found in " + JukeboxAudioLibrary.getAudioDir()).withStyle(ChatFormatting.DARK_RED));
+        } else {
+            context.getSource().sendFeedback(Component.literal("[SnowyAddons] Available audio files:").withStyle(ChatFormatting.AQUA));
+            for (String file : files) {
+                context.getSource().sendFeedback(Component.literal(" - " + file).withStyle(ChatFormatting.GRAY));
+            }
+        }
+        return 1;
+    }
+
+    private static int handleJukeboxFolder(CommandContext<FabricClientCommandSource> context) {
+        JukeboxAudioLibrary.ensureDirExists();
+        Util.getPlatform().openFile(JukeboxAudioLibrary.getAudioDir().toFile());
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Opening the jukebox audio folder... Drop .wav files in there!").withStyle(ChatFormatting.AQUA));
+        return 1;
+    }
+
+    private static int handleJukeboxPlaylist(CommandContext<FabricClientCommandSource> context) {
+        SkyblockIsland island = SkyblockIsland.fromId(StringArgumentType.getString(context, "island").toLowerCase());
+        if (island == null) {
+            context.getSource().sendFeedback(Component.literal("Unknown island! Try tab-completing options.").withStyle(ChatFormatting.DARK_RED));
+            return 1;
+        }
+
+        List<String> playlist = DataManager.INSTANCE.jukeboxPlaylists.getOrDefault(island.getId(), List.of());
+        context.getSource().sendFeedback(Component.literal("[SnowyAddons] Playlist for " + island.getDisplayName() + ":").withStyle(ChatFormatting.AQUA));
+        if (playlist.isEmpty()) {
+            context.getSource().sendFeedback(Component.literal(" (empty)").withStyle(ChatFormatting.GRAY));
+        } else {
+            for (String file : playlist) {
+                context.getSource().sendFeedback(Component.literal(" - " + file).withStyle(ChatFormatting.GRAY));
+            }
+        }
+        return 1;
+    }
+
+    private static int handleJukeboxAdd(CommandContext<FabricClientCommandSource> context) {
+        SkyblockIsland island = SkyblockIsland.fromId(StringArgumentType.getString(context, "island").toLowerCase());
+        String file = StringArgumentType.getString(context, "file");
+
+        if (island == null) {
+            context.getSource().sendFeedback(Component.literal("Unknown island! Try tab-completing options.").withStyle(ChatFormatting.DARK_RED));
+            return 1;
+        }
+
+        if (!JukeboxAudioLibrary.listAudioFiles().contains(file)) {
+            context.getSource().sendFeedback(Component.literal("That file wasn't found in the jukebox audio folder. Run /snowy jukebox files to see what's available.").withStyle(ChatFormatting.DARK_RED));
+            return 1;
+        }
+
+        List<String> playlist = DataManager.INSTANCE.jukeboxPlaylists.computeIfAbsent(island.getId(), key -> new ArrayList<>());
+        if (playlist.contains(file)) {
+            context.getSource().sendFeedback(Component.literal("That track is already in the playlist for " + island.getDisplayName() + ".").withStyle(ChatFormatting.YELLOW));
+            return 1;
+        }
+
+        playlist.add(file);
+        DataManager.save();
+        context.getSource().sendFeedback(Component.literal("[+] SnowyAddons: Added \"" + file + "\" to " + island.getDisplayName() + "'s playlist.").withStyle(ChatFormatting.GREEN));
+        return 1;
+    }
+
+    private static int handleJukeboxRemove(CommandContext<FabricClientCommandSource> context) {
+        SkyblockIsland island = SkyblockIsland.fromId(StringArgumentType.getString(context, "island").toLowerCase());
+        String file = StringArgumentType.getString(context, "file");
+
+        if (island == null) {
+            context.getSource().sendFeedback(Component.literal("Unknown island! Try tab-completing options.").withStyle(ChatFormatting.DARK_RED));
+            return 1;
+        }
+
+        List<String> playlist = DataManager.INSTANCE.jukeboxPlaylists.get(island.getId());
+        if (playlist == null || !playlist.remove(file)) {
+            context.getSource().sendFeedback(Component.literal("That track wasn't in the playlist for " + island.getDisplayName() + ".").withStyle(ChatFormatting.DARK_RED));
+            return 1;
+        }
+
+        DataManager.save();
+        context.getSource().sendFeedback(Component.literal("[-] SnowyAddons: Removed \"" + file + "\" from " + island.getDisplayName() + "'s playlist.").withStyle(ChatFormatting.RED));
+        return 1;
+    }
+
+    private static CompletableFuture<Suggestions> suggestIslands(CommandContext<FabricClientCommandSource> context, SuggestionsBuilder builder) {
+        for (SkyblockIsland island : SkyblockIsland.values()) {
+            if (island != SkyblockIsland.UNKNOWN) builder.suggest(island.getId());
+        }
+        return builder.buildFuture();
+    }
+
+    private static CompletableFuture<Suggestions> suggestAudioFiles(CommandContext<FabricClientCommandSource> context, SuggestionsBuilder builder) {
+        for (String file : JukeboxAudioLibrary.listAudioFiles()) {
+            builder.suggest(file);
+        }
+        return builder.buildFuture();
+    }
+
+    private static CompletableFuture<Suggestions> suggestPlaylistFiles(CommandContext<FabricClientCommandSource> context, SuggestionsBuilder builder) {
+        try {
+            String islandId = StringArgumentType.getString(context, "island").toLowerCase();
+            List<String> playlist = DataManager.INSTANCE.jukeboxPlaylists.get(islandId);
+            if (playlist != null) {
+                for (String file : playlist) builder.suggest(file);
+            }
+        } catch (IllegalArgumentException ignored) {
+            // "island" argument not resolved yet
         }
         return builder.buildFuture();
     }
