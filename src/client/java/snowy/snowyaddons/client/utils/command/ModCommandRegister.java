@@ -18,6 +18,7 @@ import net.minecraft.util.Util;
 import snowy.snowyaddons.client.SnowyAddonsClient;
 import snowy.snowyaddons.client.config.ModConfigScreen;
 import snowy.snowyaddons.client.modules.dailies.DailiesManager;
+import snowy.snowyaddons.client.utils.GetServerInfo;
 import snowy.snowyaddons.client.utils.SkyblockIsland;
 import snowy.snowyaddons.client.utils.audio.JukeboxAudioLibrary;
 import snowy.snowyaddons.config.ModConfig;
@@ -175,6 +176,7 @@ public class ModCommandRegister {
                         .then(ClientCommands.literal("pause").executes(ModCommandRegister::handleJukeboxPause))
                         .then(ClientCommands.literal("skip").executes(ModCommandRegister::handleJukeboxSkip))
                         .then(ClientCommands.literal("status").executes(ModCommandRegister::handleJukeboxStatus))
+                        .then(ClientCommands.literal("debug").executes(ModCommandRegister::handleJukeboxDebug))
                         .then(ClientCommands.literal("islands").executes(ModCommandRegister::handleJukeboxIslands))
                         .then(ClientCommands.literal("files").executes(ModCommandRegister::handleJukeboxFiles))
                         .then(ClientCommands.literal("folder").executes(ModCommandRegister::handleJukeboxFolder))
@@ -204,7 +206,7 @@ public class ModCommandRegister {
                         )
 
                         .executes(context -> {
-                            context.getSource().sendFeedback(Component.literal("Usage: /snowy jukebox <play|pause|skip|status|islands|files|folder|playlist|add|remove>").withStyle(ChatFormatting.DARK_RED));
+                            context.getSource().sendFeedback(Component.literal("Usage: /snowy jukebox <play|pause|skip|status|debug|islands|files|folder|playlist|add|remove>").withStyle(ChatFormatting.DARK_RED));
                             return 1;
                         })
                 )
@@ -266,6 +268,33 @@ public class ModCommandRegister {
 
     private static int handleJukeboxStatus(CommandContext<FabricClientCommandSource> context) {
         context.getSource().sendFeedback(SnowyAddonsClient.jukebox.getStatusMessage());
+        return 1;
+    }
+
+    private static int handleJukeboxDebug(CommandContext<FabricClientCommandSource> context) {
+        var source = context.getSource();
+        ModConfig config = ModConfig.HANDLER.instance();
+
+        SkyblockIsland island = GetServerInfo.getCurrentIsland();
+
+        List<String> playlist = DataManager.INSTANCE.jukeboxPlaylists.getOrDefault(island.getId(), List.of());
+
+        source.sendFeedback(Component.literal("[SnowyAddons] Jukebox debug:").withStyle(ChatFormatting.AQUA));
+        source.sendFeedback(Component.literal(" jukeboxEnabled = " + config.jukeboxEnabled).withStyle(ChatFormatting.GRAY));
+        source.sendFeedback(Component.literal(" isInSkyBlock() = " + GetServerInfo.isInSkyBlock()).withStyle(ChatFormatting.GRAY));
+        source.sendFeedback(Component.literal(" isInDungeon() = " + GetServerInfo.isInDungeon()).withStyle(ChatFormatting.GRAY));
+        source.sendFeedback(Component.literal(" getCurrentIsland() = " + island.getId() + " (" + island.getDisplayName() + ")").withStyle(ChatFormatting.GRAY));
+        source.sendFeedback(Component.literal(" playlist size for that island = " + playlist.size()).withStyle(ChatFormatting.GRAY));
+        source.sendFeedback(Component.literal(" Raw sidebar lines (color codes stripped):").withStyle(ChatFormatting.YELLOW));
+
+        List<String> lines = GetServerInfo.getSidebarLines();
+        if (lines.isEmpty()) {
+            source.sendFeedback(Component.literal("  (no sidebar objective found)").withStyle(ChatFormatting.DARK_RED));
+        } else {
+            for (String line : lines) {
+                source.sendFeedback(Component.literal("  \"" + line + "\"").withStyle(ChatFormatting.WHITE));
+            }
+        }
         return 1;
     }
 

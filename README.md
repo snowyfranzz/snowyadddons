@@ -75,6 +75,8 @@ SnowyAddons directly depends on **YACL** for its config system. It is also recom
 
 `/snowy jukebox status` → Shows what's currently playing and on which island.
 
+`/snowy jukebox debug` → Shows raw island-detection info (useful if playback isn't starting).
+
 `/snowy jukebox islands` → Lists every island you can build a playlist for.
 
 `/snowy jukebox files` → Lists the `.wav` files sitting in your jukebox audio folder.
