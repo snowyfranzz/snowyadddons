@@ -52,6 +52,7 @@ public class ModCommandRegister {
         CONFIG_TOGGLES.put("bchelper", new TogglePair("m2BcHelper", () -> ModConfig.HANDLER.instance().bcHelper, val -> ModConfig.HANDLER.instance().bcHelper = val));
         CONFIG_TOGGLES.put("m2splits", new TogglePair("m2Splits", () -> ModConfig.HANDLER.instance().m2Splits, val -> ModConfig.HANDLER.instance().m2Splits = val));
         CONFIG_TOGGLES.put("autoquakecraft", new TogglePair("autoQuake", () -> ModConfig.HANDLER.instance().autoQuake, val -> ModConfig.HANDLER.instance().autoQuake = val));
+        CONFIG_TOGGLES.put("jukebox", new TogglePair("jukebox", () -> ModConfig.HANDLER.instance().jukeboxEnabled, val -> ModConfig.HANDLER.instance().jukeboxEnabled = val));
 
         // dailies
         DAILY_TOGGLES.put("pests", new DailyPair("Pests", () -> DataManager.INSTANCE.dailiesPestsState, val -> DataManager.INSTANCE.dailiesPestsState = val));

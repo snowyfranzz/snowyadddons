@@ -59,7 +59,11 @@ public class JukeboxManager {
 
         SkyblockIsland island = GetServerInfo.getCurrentIsland();
 
-        if (island != currentIsland) {
+        // Scoreboard reads can transiently come back UNKNOWN (right after joining, or whenever
+        // Hypixel re-sends the sidebar) even though the player hasn't actually left the island.
+        // Ignoring those blips instead of treating them as a real departure keeps the join-delay
+        // countdown from being repeatedly reset before it ever completes.
+        if (island != SkyblockIsland.UNKNOWN && island != currentIsland) {
             currentIsland = island;
             stopPlayback();
             pendingIsland = island;
